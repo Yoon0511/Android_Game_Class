@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final ArrayList<Integer> CARD_IDS = new ArrayList<>();
@@ -37,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame() {
+        Random random = new Random();
+        for(int i = 0;i< resIds.length;++i){
+            int t = random.nextInt(resIds.length);
+            int id = resIds[i];
+            resIds[i] = resIds[t];
+            resIds[t] = id;
+        }
+
+
         for(int i = 0;i< resIds.length;++i){
             int resId = resIds[i];
             ImageButton btn = CARDS.get(i);
@@ -63,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         if(previousButton != null){
             prevResId = (Integer) previousButton.getTag();
         }
-
 
         int resId = (Integer)imagebutton.getTag();
         if(resId != prevResId){
