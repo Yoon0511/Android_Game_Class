@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
             R.mipmap.card_as,R.mipmap.card_2c,R.mipmap.card_3d,R.mipmap.card_4h,
             R.mipmap.card_5s,R.mipmap.card_jc,R.mipmap.card_kd,R.mipmap.card_qh
     };
-    private int Flips;
     private TextView scoreTextView;
+    private int Flips;
+    private int openCardCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +40,19 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0;i< resIds.length;++i){
             int resId = resIds[i];
             ImageButton btn = CARDS.get(i);
+            btn.setVisibility(View.VISIBLE);
+            btn.setImageResource(R.mipmap.card_blue_back);
             btn.setTag(resId);
         }
+        previousButton = null;
+        openCardCount = resIds.length;
         setScore(0);
     }
 
     public void onBtnCard(View view) {
-
-
         if ((ImageButton) view == previousButton){
             Log.d("MYTAG","same card");
+            Toast.makeText(this,"You pressed same card!",Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -72,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
         else{
             imagebutton.setVisibility(View.INVISIBLE);
             previousButton.setVisibility(View.INVISIBLE);
+            openCardCount -= 2;
+            if(openCardCount == 0){
+                askRetry();
+            }
+
             previousButton = null;
         }
     }
