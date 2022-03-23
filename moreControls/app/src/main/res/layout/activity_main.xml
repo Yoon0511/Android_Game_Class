@@ -14,6 +14,12 @@
         android:text="Hello World!"
         android:textSize="30sp">
     </TextView>
+    <EditText
+        android:id="@+id/nameEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        ></EditText>
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="match_parent"
