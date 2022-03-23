@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -62,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBtnCard(View view) {
         if ((ImageButton) view == previousButton){
             Log.d("MYTAG","same card");
-            Toast.makeText(this,"You pressed same card!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    R.string.same_casd_toast,
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -98,7 +101,10 @@ public class MainActivity extends AppCompatActivity {
     private void setScore(int flips) {
         this.Flips = flips;
 
-        scoreTextView.setText("Flips: " + flips);
+        Resources res = getResources();
+        String fmt = res.getString(R.string.flips_fmt);//"Flips: %d";
+        String text = String.format(fmt,flips);
+        scoreTextView.setText(text);
     }
 
     private int findButtonIndex(int id) {
@@ -135,15 +141,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void askRetry() {
         new AlertDialog.Builder(this)
-                .setTitle("Restart")
-                .setMessage("Do you really want to restart the game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.restart)
+                .setMessage(R.string.restart_alert_msg)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         startGame();
                     }
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(R.string.no, null)
                 .create()
                 .show();
     }

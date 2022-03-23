@@ -24,7 +24,7 @@
            android:onClick="onBtnRestart"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="Restart"
+           android:text="@string/restart"
            android:layout_gravity="right">
        </Button>
    </LinearLayout>
@@ -36,19 +36,19 @@
 
         <ImageButton
             android:id="@+id/card_00"
-            style="@style/CardStyle"></ImageButton>
+            style="@style/cardButtonStyle"></ImageButton>
 
         <ImageButton
             android:id="@+id/card_01"
-            style="@style/CardStyle"></ImageButton>
+            style="@style/cardButtonStyle"></ImageButton>
 
         <ImageButton
             android:id="@+id/card_02"
-            style="@style/CardStyle"></ImageButton>
+            style="@style/cardButtonStyle"></ImageButton>
 
         <ImageButton
             android:id="@+id/card_03"
-            style="@style/CardStyle"></ImageButton>
+            style="@style/cardButtonStyle"></ImageButton>
     </LinearLayout>
 
     <LinearLayout
@@ -59,23 +59,19 @@
         >
         <ImageButton
             android:id="@+id/card_10"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_11"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_12"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_13"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
     </LinearLayout>
 
@@ -87,23 +83,19 @@
         >
         <ImageButton
             android:id="@+id/card_20"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_21"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_22"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_23"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
     </LinearLayout>
     <LinearLayout
@@ -114,23 +106,19 @@
         >
         <ImageButton
             android:id="@+id/card_30"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_31"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_32"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
         <ImageButton
             android:id="@+id/card_33"
-            style="@style/CardStyle"
-            >
+            style="@style/cardButtonStyle">
         </ImageButton>
     </LinearLayout>
 </LinearLayout>
