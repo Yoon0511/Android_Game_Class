@@ -20,13 +20,30 @@
         android:layout_height="wrap_content"
 
         ></EditText>
-    <CheckBox
-        android:id="@+id/checkbox"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/checkbox"
-        android:onClick="onCheckbox"
-        ></CheckBox>
+        android:layout_height="wrap_content">
+
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkbox"
+            android:onClick="onCheckbox"
+            ></CheckBox>
+        <kr.ac.morecontrlos.GameView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1">
+        </kr.ac.morecontrlos.GameView>
+    </LinearLayout>
+    <kr.ac.morecontrlos.GameView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </kr.ac.morecontrlos.GameView>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
