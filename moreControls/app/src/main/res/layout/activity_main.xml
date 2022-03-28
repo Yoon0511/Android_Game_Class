@@ -9,10 +9,14 @@
 
     <TextView
         android:id="@+id/outputTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:textSize="30sp">
+        android:textSize="30sp"
+        android:background="#fcc"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        >
     </TextView>
     <EditText
         android:id="@+id/nameEdit"
@@ -35,14 +39,20 @@
         <kr.ac.morecontrlos.GameView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="#ccf"
+            >
         </kr.ac.morecontrlos.GameView>
     </LinearLayout>
     <kr.ac.morecontrlos.GameView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
+        android:layout_weight="1"
+        android:paddingLeft="20dp"
+        android:paddingRight="70dp"
+        android:background="#ccf"
+        >
     </kr.ac.morecontrlos.GameView>
     <Button
         android:layout_width="match_parent"
