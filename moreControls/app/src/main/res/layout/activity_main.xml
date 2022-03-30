@@ -52,7 +52,6 @@
         android:paddingLeft="100dp"
         android:paddingRight="100dp"
         android:paddingTop="50dp"
-        android:paddingBottom="50dp"
         android:background="#ccf"
         >
     </kr.ac.morecontrlos.GameView>
