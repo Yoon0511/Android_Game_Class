@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -21,7 +22,9 @@ public class GameView extends View {
     private Paint leftCiclePaint = new Paint();
     private Paint rightCiclePaint = new Paint();
     private Paint textPaint = new Paint();
+    private Paint arcPaint = new Paint();
     private Rect textExtentRect = new Rect();
+
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -35,6 +38,9 @@ public class GameView extends View {
         rightCiclePaint.setColor(Color.RED);
         rightCiclePaint.setStyle(Paint.Style.STROKE);
         rightCiclePaint.setStrokeWidth(10);
+        arcPaint.setColor(Color.YELLOW);
+        arcPaint.setStyle(Paint.Style.STROKE);
+        arcPaint.setStrokeWidth(20);
         textPaint.setColor(Color.GREEN);
         textPaint.setTextSize(50);
         Resources res = getResources();
@@ -59,14 +65,25 @@ public class GameView extends View {
         int size = contentWidth < contentHeight ? contentWidth : contentHeight;
 
 
-        int centerX = paddingLeft + contentWidth/2;
+        int centerX = paddingLeft + contentWidth / 2;
         int centerY = paddingTop + contentHeight / 2;
 
         drawBackground(canvas, paddingLeft, paddingTop, contentWidth, contentHeight);
-        drawSoccerBall(canvas, size, centerX, centerY);
+        drawSoccerBall(canvas, size, centerX/2, centerY);
+        drawSoccerBall(canvas, size, centerX + contentWidth / 4, centerY);
         drawLeftCirle(canvas, paddingLeft, paddingTop, contentWidth, contentHeight, size);
         drawRightCirle(canvas, paddingTop, contentWidth, contentHeight, centerX, size);
         drawCenterText(canvas, contentHeight, centerX, centerY);
+
+        RectF arcRect = new RectF();
+        int arcRaius = size / 5;
+        arcRect.set(centerX/2 - arcRaius,centerY - arcRaius - arcRaius/2,
+                centerX/2 + arcRaius,centerY + arcRaius);
+        canvas.drawArc(arcRect,0,-180,false,arcPaint);
+
+//        RectF arcRect = new RectF();
+        arcRect.set(paddingLeft,centerY,contentWidth + paddingLeft,contentHeight+paddingTop);
+        canvas.drawArc(arcRect,0,180,false,arcPaint);
     }
 
     private void drawBackground(Canvas canvas, int paddingLeft, int paddingTop, int contentWidth, int contentHeight) {
@@ -98,7 +115,7 @@ public class GameView extends View {
         String text = "Soccer";
         textPaint.getTextBounds(text,0,text.length(),textExtentRect);
         int textX = centerX - textExtentRect.width() / 2;
-        int textY = centerY + contentHeight / 4;
+        int textY = centerY;
         canvas.drawText(text,textX,textY,textPaint);
     }
 }
