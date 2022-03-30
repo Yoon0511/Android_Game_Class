@@ -41,7 +41,7 @@ public class GameView extends View {
         arcPaint.setColor(Color.YELLOW);
         arcPaint.setStyle(Paint.Style.STROKE);
         arcPaint.setStrokeWidth(20);
-        textPaint.setColor(Color.BLACK);
+        textPaint.setColor(Color.GREEN);
         textPaint.setTextSize(50);
         Resources res = getResources();
         soccerBitmap = BitmapFactory.decodeResource(res,R.mipmap.soccer_ball_240);
