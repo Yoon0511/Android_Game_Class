@@ -69,20 +69,27 @@ public class GameView extends View {
         int centerY = paddingTop + contentHeight / 2;
 
         drawBackground(canvas, paddingLeft, paddingTop, contentWidth, contentHeight);
-        drawSoccerBall(canvas, size, centerX/2, centerY);
-        drawSoccerBall(canvas, size, centerX + contentWidth / 4, centerY);
-        drawLeftCirle(canvas, paddingLeft, paddingTop, contentWidth, contentHeight, size);
-        drawRightCirle(canvas, paddingTop, contentWidth, contentHeight, centerX, size);
-        drawCenterText(canvas, contentHeight, centerX, centerY);
+        drawEyebrow(canvas, size, paddingLeft + contentWidth/4, centerY);
+        drawSoccerBall(canvas, size, paddingLeft + contentWidth/4, centerY);
 
+        drawEyebrow(canvas, size, centerX + contentWidth / 4, centerY);
+        drawSoccerBall(canvas, size, centerX + contentWidth / 4, centerY);
+
+        drawCenterText(canvas, contentHeight, centerX, centerY);
+        drawMouth(canvas, paddingLeft, paddingTop, contentWidth, contentHeight, centerY);
+    }
+
+    private void drawEyebrow(Canvas canvas, int size, int centerX, int centerY) {
         RectF arcRect = new RectF();
         int arcRaius = size / 5;
-        arcRect.set(centerX/2 - arcRaius,centerY - arcRaius - arcRaius/2,
-                centerX/2 + arcRaius,centerY + arcRaius);
+        arcRect.set(centerX - arcRaius, centerY - arcRaius,
+                centerX + arcRaius, centerY + arcRaius);
         canvas.drawArc(arcRect,0,-180,false,arcPaint);
+    }
 
-//        RectF arcRect = new RectF();
-        arcRect.set(paddingLeft,centerY,contentWidth + paddingLeft,contentHeight+paddingTop);
+    private void drawMouth(Canvas canvas, int paddingLeft, int paddingTop, int contentWidth, int contentHeight, int centerY) {
+        RectF arcRect = new RectF();
+        arcRect.set(paddingLeft, centerY, contentWidth + paddingLeft, contentHeight + paddingTop);
         canvas.drawArc(arcRect,0,180,false,arcPaint);
     }
 
@@ -112,10 +119,10 @@ public class GameView extends View {
     }
 
     private void drawCenterText(Canvas canvas, int contentHeight, int centerX, int centerY) {
-        String text = "Soccer";
+        String text = "Smile";
         textPaint.getTextBounds(text,0,text.length(),textExtentRect);
         int textX = centerX - textExtentRect.width() / 2;
-        int textY = centerY;
+        int textY = getPaddingTop() + contentHeight/4;
         canvas.drawText(text,textX,textY,textPaint);
     }
 }
