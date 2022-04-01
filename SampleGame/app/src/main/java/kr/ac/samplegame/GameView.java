@@ -20,7 +20,6 @@ public class GameView extends View {
     private Rect soccerSrcRect = new Rect();
     private Rect soccerDrcRect = new Rect();
     private Paint textPaint = new Paint();
-    private Handler handler = new Handler();
     private int ballDx,ballDy;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
@@ -44,12 +43,12 @@ public class GameView extends View {
     private void updateFrame() {
         update();
         invalidate();
-        handler.post(new Runnable() {
+        postDelayed(new Runnable() {
             @Override
             public void run() {
                 updateFrame();
             }
-        });
+        },16);
     }
 
     private void update() {
