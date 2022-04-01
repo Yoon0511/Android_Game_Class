@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
 
@@ -19,10 +18,12 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     private Bitmap soccerBitmap;
     private Rect soccerSrcRect = new Rect();
-    private Rect soccerDrcRect = new Rect();
+    private Rect soccer1DrcRect = new Rect();
+    private Rect soccer2DrcRect = new Rect();
     private Paint fpsPaint = new Paint();
-    private int ballDx,ballDy;
-    private long previousTimeMills;
+    private int ball1Dx, ball1Dy;
+    private int ball2Dx,ball2Dy;
+    private long previousTimeNanos;
     private int framesPerSecond;
 
     public GameView(Context context, @Nullable AttributeSet attrs) {
@@ -35,10 +36,14 @@ public class GameView extends View implements Choreographer.FrameCallback {
         Resources res = getResources();
         soccerBitmap = BitmapFactory.decodeResource(res,R.mipmap.soccer_ball_240);
         soccerSrcRect.set(0,0,soccerBitmap.getWidth(),soccerBitmap.getHeight());
-        soccerDrcRect.set(0,0,200,200);
+        soccer1DrcRect.set(0,0,200,200);
+        soccer2DrcRect.set(0,0,200,200);
 
-        ballDx = 10;
-        ballDy = 10;
+        ball1Dx = 10;
+        ball1Dy = 10;
+
+        ball2Dx = 7;
+        ball2Dy = 15;
 
         fpsPaint.setColor(Color.BLUE);
         fpsPaint.setTextSize(100);
@@ -49,43 +54,64 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public void doFrame(long currentTimeNanos) {
         long now = currentTimeNanos;
 //        long now = System.currentTimeMillis();
-        int elapsed = (int) (now - previousTimeMills);
+        int elapsed = (int) (now - previousTimeNanos);
         framesPerSecond = 1_000_000_000 / elapsed;
         //Log.v(TAG,"Elapsed: " + elapsed + " FPS: " + framesPerSecond);
-        previousTimeMills = now;
+        previousTimeNanos = now;
         update();
         invalidate();
         Choreographer.getInstance().postFrameCallback(this);
     }
 
     private void update() {
-        soccerDrcRect.offset(ballDx,ballDy);
+        soccer1DrcRect.offset(ball1Dx, ball1Dy);
+        soccer2DrcRect.offset(ball2Dx,ball1Dy);
 
-        if(ballDx > 0){
-            if(soccerDrcRect.right > getWidth()){
-                ballDx = -ballDx;
+        if(ball1Dx > 0){
+            if(soccer1DrcRect.right > getWidth()){
+                ball1Dx = -ball1Dx;
             }
         }else{
-            if(soccerDrcRect.left < 0){
-                ballDx = - ballDx;
+            if(soccer1DrcRect.left < 0){
+                ball1Dx = -ball1Dx;
             }
         }
 
-        if(ballDy > 0){
-            if(soccerDrcRect.bottom > getHeight()){
-                ballDy = -ballDy;
+        if(ball1Dy > 0){
+            if(soccer1DrcRect.bottom > getHeight()){
+                ball1Dy = -ball1Dy;
             }
         }else{
-            if(soccerDrcRect.top < 0){
-                ballDy = -ballDy;
+            if(soccer1DrcRect.top < 0){
+                ball1Dy = -ball1Dy;
             }
         }
 
+        if(ball2Dx > 0){
+            if(soccer2DrcRect.right > getWidth()){
+                ball2Dx = -ball2Dx;
+            }
+        }else{
+            if(soccer2DrcRect.left < 0){
+                ball2Dx = -ball2Dx;
+            }
+        }
+
+        if(ball2Dy > 0){
+            if(soccer2DrcRect.bottom > getHeight()){
+                ball2Dy = -ball2Dy;
+            }
+        }else{
+            if(soccer2DrcRect.top < 0){
+                ball2Dy = -ball2Dy;
+            }
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(soccerBitmap,soccerSrcRect,soccerDrcRect,null);
+        canvas.drawBitmap(soccerBitmap,soccerSrcRect, soccer1DrcRect,null);
+        canvas.drawBitmap(soccerBitmap,soccerSrcRect, soccer2DrcRect,null);
         canvas.drawText("FPS: " + framesPerSecond,100,100,fpsPaint);
         //Log.d(TAG,"onDraw()");
     }
