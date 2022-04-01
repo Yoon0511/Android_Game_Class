@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -18,8 +19,10 @@ public class GameView extends View {
     private Bitmap soccerBitmap;
     private Rect soccerSrcRect = new Rect();
     private Rect soccerDrcRect = new Rect();
-
+    private Paint textPaint = new Paint();
     private Handler handler = new Handler();
+    private int ballDx,ballDy;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
        initView();
@@ -32,11 +35,14 @@ public class GameView extends View {
         soccerSrcRect.set(0,0,soccerBitmap.getWidth(),soccerBitmap.getHeight());
         soccerDrcRect.set(0,0,200,200);
 
+        ballDx = 10;
+        ballDy = 10;
+
         updateFrame();
     }
 
     private void updateFrame() {
-        soccerDrcRect.offset(1,1);
+        update();
         invalidate();
         handler.post(new Runnable() {
             @Override
@@ -44,6 +50,31 @@ public class GameView extends View {
                 updateFrame();
             }
         });
+    }
+
+    private void update() {
+        soccerDrcRect.offset(ballDx,ballDy);
+
+        if(ballDx > 0){
+            if(soccerDrcRect.right > getWidth()){
+                ballDx = -ballDx;
+            }
+        }else{
+            if(soccerDrcRect.left < 0){
+                ballDx = - ballDx;
+            }
+        }
+
+        if(ballDy > 0){
+            if(soccerDrcRect.bottom > getHeight()){
+                ballDy = -ballDy;
+            }
+        }else{
+            if(soccerDrcRect.top < 0){
+                ballDy = -ballDy;
+            }
+        }
+
     }
 
     @Override
