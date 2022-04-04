@@ -11,21 +11,28 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.Choreographer;
 import android.view.View;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
-    private Bitmap soccerBitmap;
-    private Rect soccerSrcRect = new Rect();
-    private Rect soccer1DrcRect = new Rect();
-    private Rect soccer2DrcRect = new Rect();
+//    private Bitmap soccerBitmap;
+//    private Rect soccerSrcRect = new Rect();
+//    private Rect soccer1DrcRect = new Rect();
+//    private Rect soccer2DrcRect = new Rect();
+//    private int ball1Dx, ball1Dy;
+//    private int ball2Dx,ball2Dy;
+
+//    Ball ball1,ball2;
+    private ArrayList<Ball> balls = new ArrayList<>();
     private Paint fpsPaint = new Paint();
-    private int ball1Dx, ball1Dy;
-    private int ball2Dx,ball2Dy;
     private long previousTimeNanos;
     private int framesPerSecond;
 
+    public static GameView view;
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
        initView();
@@ -33,17 +40,16 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     private void initView(){
+        view = this;
+
         Resources res = getResources();
-        soccerBitmap = BitmapFactory.decodeResource(res,R.mipmap.soccer_ball_240);
-        soccerSrcRect.set(0,0,soccerBitmap.getWidth(),soccerBitmap.getHeight());
-        soccer1DrcRect.set(0,0,200,200);
-        soccer2DrcRect.set(0,0,200,200);
+        Bitmap soccerBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
+        Ball.setBitmap(soccerBitmap);
 
-        ball1Dx = 10;
-        ball1Dy = 10;
-
-        ball2Dx = 7;
-        ball2Dy = 15;
+        Ball ball1 = new Ball(10,10);
+        Ball ball2 = new Ball(7,15);
+        balls.add(ball1);
+        balls.add(ball2);
 
         fpsPaint.setColor(Color.BLUE);
         fpsPaint.setTextSize(100);
@@ -55,6 +61,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         long now = currentTimeNanos;
 //        long now = System.currentTimeMillis();
         int elapsed = (int) (now - previousTimeNanos);
+
         framesPerSecond = 1_000_000_000 / elapsed;
         //Log.v(TAG,"Elapsed: " + elapsed + " FPS: " + framesPerSecond);
         previousTimeNanos = now;
@@ -64,54 +71,20 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     private void update() {
-        soccer1DrcRect.offset(ball1Dx, ball1Dy);
-        soccer2DrcRect.offset(ball2Dx,ball1Dy);
-
-        if(ball1Dx > 0){
-            if(soccer1DrcRect.right > getWidth()){
-                ball1Dx = -ball1Dx;
-            }
-        }else{
-            if(soccer1DrcRect.left < 0){
-                ball1Dx = -ball1Dx;
-            }
-        }
-
-        if(ball1Dy > 0){
-            if(soccer1DrcRect.bottom > getHeight()){
-                ball1Dy = -ball1Dy;
-            }
-        }else{
-            if(soccer1DrcRect.top < 0){
-                ball1Dy = -ball1Dy;
-            }
-        }
-
-        if(ball2Dx > 0){
-            if(soccer2DrcRect.right > getWidth()){
-                ball2Dx = -ball2Dx;
-            }
-        }else{
-            if(soccer2DrcRect.left < 0){
-                ball2Dx = -ball2Dx;
-            }
-        }
-
-        if(ball2Dy > 0){
-            if(soccer2DrcRect.bottom > getHeight()){
-                ball2Dy = -ball2Dy;
-            }
-        }else{
-            if(soccer2DrcRect.top < 0){
-                ball2Dy = -ball2Dy;
-            }
+//        ball1.update();
+//        ball2.update();
+        for(Ball ball : balls){
+            ball.update();
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(soccerBitmap,soccerSrcRect, soccer1DrcRect,null);
-        canvas.drawBitmap(soccerBitmap,soccerSrcRect, soccer2DrcRect,null);
+        for(Ball ball : balls){
+            ball.draw(canvas);
+        }
+//        ball1.draw(canvas);
+//        ball2.draw(canvas);
         canvas.drawText("FPS: " + framesPerSecond,100,100,fpsPaint);
         //Log.d(TAG,"onDraw()");
     }
