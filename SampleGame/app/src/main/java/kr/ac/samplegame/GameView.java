@@ -21,15 +21,10 @@ import java.util.Random;
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     private static final int BALL_COUNT = 10;
-//    private Bitmap soccerBitmap;
-//    private Rect soccerSrcRect = new Rect();
-//    private Rect soccer1DrcRect = new Rect();
-//    private Rect soccer2DrcRect = new Rect();
-//    private int ball1Dx, ball1Dy;
-//    private int ball2Dx,ball2Dy;
 
-//    Ball ball1,ball2;
     private ArrayList<Ball> balls = new ArrayList<>();
+    private Fighter fighter;
+
     private Paint fpsPaint = new Paint();
     private long previousTimeNanos;
     private int framesPerSecond;
@@ -44,9 +39,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private void initView(){
         view = this;
 
-        Resources res = getResources();
-        Bitmap soccerBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
-        Ball.setBitmap(soccerBitmap);
+//        Resources res = getResources();
+//        Bitmap soccerBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
+//        Ball.setBitmap(soccerBitmap);
 
         Random random = new Random();
         for (int i = 0;i<BALL_COUNT;++i){
@@ -55,10 +50,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
             Ball ball = new Ball(dx,dy);
             balls.add(ball);
          }
-//        Ball ball1 = new Ball(10,10);
-//        Ball ball2 = new Ball(7,15);
-//        balls.add(ball1);
-//        balls.add(ball2);
+        fighter = new Fighter();
 
         fpsPaint.setColor(Color.BLUE);
         fpsPaint.setTextSize(100);
@@ -70,18 +62,18 @@ public class GameView extends View implements Choreographer.FrameCallback {
         long now = currentTimeNanos;
 //        long now = System.currentTimeMillis();
         int elapsed = (int) (now - previousTimeNanos);
+        if(elapsed != 0){
+            framesPerSecond = 1_000_000_000 / elapsed;
+            //Log.v(TAG,"Elapsed: " + elapsed + " FPS: " + framesPerSecond);
+            previousTimeNanos = now;
+            update();
+            invalidate();
+        }
 
-        framesPerSecond = 1_000_000_000 / elapsed;
-        //Log.v(TAG,"Elapsed: " + elapsed + " FPS: " + framesPerSecond);
-        previousTimeNanos = now;
-        update();
-        invalidate();
         Choreographer.getInstance().postFrameCallback(this);
     }
 
     private void update() {
-//        ball1.update();
-//        ball2.update();
         for(Ball ball : balls){
             ball.update();
         }
@@ -92,8 +84,7 @@ public class GameView extends View implements Choreographer.FrameCallback {
         for(Ball ball : balls){
             ball.draw(canvas);
         }
-//        ball1.draw(canvas);
-//        ball2.draw(canvas);
+        fighter.draw(canvas);
         canvas.drawText("FPS: " + framesPerSecond,100,100,fpsPaint);
         //Log.d(TAG,"onDraw()");
     }

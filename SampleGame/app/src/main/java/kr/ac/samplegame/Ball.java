@@ -1,6 +1,8 @@
 package kr.ac.samplegame;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
@@ -13,13 +15,19 @@ public class Ball {
     public Ball(int dx, int dy){
         this.dx = dx;
         this.dy = dy;
-
         dstRect.set(0,0,200,200);
+
+        if (bitmap == null){
+            Resources res = GameView.view.getResources();
+            bitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
+            srcRect.set(0,0,bitmap.getWidth(),bitmap.getHeight());
+        }
     }
-    public static void setBitmap(Bitmap bitmap){
-        Ball.bitmap = bitmap;
-        srcRect.set(0,0,bitmap.getWidth(),bitmap.getHeight());
-    }
+
+    //    public static void setBitmap(Bitmap bitmap){
+//        Ball.bitmap = bitmap;
+//        srcRect.set(0,0,bitmap.getWidth(),bitmap.getHeight());
+//    }
 
     public void update() {
         dstRect.offset(dx, dy);
