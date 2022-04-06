@@ -32,9 +32,21 @@ public class GameView extends View implements Choreographer.FrameCallback {
     private int framesPerSecond;
 
     public static GameView view;
+    private boolean initialized;
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-       initView();
+//       initView();
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        if(!initialized){
+            initView();
+            initialized = true;
+        }
 
     }
 
