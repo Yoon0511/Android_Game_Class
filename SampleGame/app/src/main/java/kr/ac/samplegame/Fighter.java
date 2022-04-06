@@ -24,15 +24,14 @@ public class Fighter implements GameObject{
 //        float radious_dp = 100;
 //        DisplayMetrics displayMetrics = GameView.view.getResources().getDisplayMetrics();
 //        float radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,radious_dp, displayMetrics);
-        Resources res = GameView.view.getResources();
-        float radius = res.getDimension(R.dimen.fighter_radius);
+        float radius = Metrics.size(R.dimen.fighter_radius);
         dstRect.set(x- radius,y - radius,
                 x+radius,y+radius);
         tx = x;
         ty = y;
 
         if (bitmap == null){
-//            Resources res = GameView.view.getResources();
+            Resources res = GameView.view.getResources();
             bitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
             srcRect.set(0,0,bitmap.getWidth(),bitmap.getHeight());
         }
@@ -45,7 +44,7 @@ public class Fighter implements GameObject{
 
     public void update() {
         float angle = (float) Math.atan2(ty - y,tx - x);
-        float speed = 1000;
+        float speed = Metrics.size(R.dimen.fighter_speed);
         float dist = speed * MainGame.getSingleton().frameTime;
         dx = (float) (dist * Math.cos(angle));
         dy = (float) (dist * Math.sin(angle));
