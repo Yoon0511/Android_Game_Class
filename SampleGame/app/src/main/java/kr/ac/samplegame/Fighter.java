@@ -21,16 +21,18 @@ public class Fighter implements GameObject{
     public Fighter(float x, float y){
         this.x = x;
         this.y = y;
-        float radious_dp = 100;
-        DisplayMetrics displayMetrics = GameView.view.getResources().getDisplayMetrics();
-        float radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,radious_dp, displayMetrics);
+//        float radious_dp = 100;
+//        DisplayMetrics displayMetrics = GameView.view.getResources().getDisplayMetrics();
+//        float radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,radious_dp, displayMetrics);
+        Resources res = GameView.view.getResources();
+        float radius = res.getDimension(R.dimen.fighter_radius);
         dstRect.set(x- radius,y - radius,
                 x+radius,y+radius);
         tx = x;
         ty = y;
 
         if (bitmap == null){
-            Resources res = GameView.view.getResources();
+//            Resources res = GameView.view.getResources();
             bitmap = BitmapFactory.decodeResource(res, R.mipmap.plane_240);
             srcRect.set(0,0,bitmap.getWidth(),bitmap.getHeight());
         }
