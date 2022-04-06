@@ -16,10 +16,12 @@ public class Fighter implements GameObject{
     private float dx,dy;
     private  float tx,ty;
 
-    public Fighter(){
-        x = 100;
-        y = 100;
-        dstRect.set(0,0,200,200);
+    public Fighter(float x, float y){
+        this.x = x;
+        this.y = y;
+        float radius = 100;
+        dstRect.set(x- radius,y - radius,
+                x+radius,y+radius);
         tx = x;
         ty = y;
 
@@ -41,8 +43,46 @@ public class Fighter implements GameObject{
         float dist = speed * MainGame.getSingleton().frameTime;
         dx = (float) (dist * Math.cos(angle));
         dy = (float) (dist * Math.sin(angle));
-        x += dx;
-        y += dy;
+
+        if(dx > 0){
+            if(x+ dx > tx){
+                dx = tx - x;
+                x = tx;
+            }
+            else{
+                x += dx;
+            }
+        }
+        else{
+            if (x + dx < tx){
+                dx = tx - x;
+                x = tx;
+            }
+            else{
+                x += dx;
+            }
+        }
+
+        if(dy > 0){
+            if(y + dy > ty){
+                dy = ty - y;
+                y = ty;
+            }
+            else{
+                y += dy;
+            }
+        }
+        else{
+            if (y + dy < ty){
+                dy = ty - y;
+                y = ty;
+            }
+            else{
+                y += dy;
+            }
+        }
+//        x += dx;
+//        y += dy;
         dstRect.offset(dx,dy);
     }
 
