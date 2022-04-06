@@ -21,11 +21,11 @@ import java.util.Random;
 
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
-    private static final int BALL_COUNT = 10;
+//    private static final int BALL_COUNT = 10;
 
 //    private ArrayList<Ball> balls = new ArrayList<>();
-    private ArrayList<GameObject> objects = new ArrayList<>();
-    private Fighter fighter;
+//    private ArrayList<GameObject> objects = new ArrayList<>();
+//    private Fighter fighter;
 
     private Paint fpsPaint = new Paint();
     private long previousTimeNanos;
@@ -45,15 +45,8 @@ public class GameView extends View implements Choreographer.FrameCallback {
 //        Bitmap soccerBitmap = BitmapFactory.decodeResource(res, R.mipmap.soccer_ball_240);
 //        Ball.setBitmap(soccerBitmap);
 
-        Random random = new Random();
-        for (int i = 0;i<BALL_COUNT;++i){
-            int dx = random.nextInt(10) + 5;
-            int dy = random.nextInt(10) + 5;
-            Ball ball = new Ball(dx,dy);
-            objects.add(ball);
-         }
-        fighter = new Fighter();
-        objects.add(fighter);
+        MainGame game = MainGame.getSingleton();
+        game.init();
 
         fpsPaint.setColor(Color.BLUE);
         fpsPaint.setTextSize(100);
@@ -69,24 +62,18 @@ public class GameView extends View implements Choreographer.FrameCallback {
             framesPerSecond = 1_000_000_000 / elapsed;
             //Log.v(TAG,"Elapsed: " + elapsed + " FPS: " + framesPerSecond);
             previousTimeNanos = now;
-            update();
+            MainGame.getSingleton().update();
             invalidate();
         }
 
         Choreographer.getInstance().postFrameCallback(this);
     }
 
-    private void update() {
-        for(GameObject gobj : objects){
-            gobj.update();
-        }
-    }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for(GameObject gobj : objects){
-            gobj.draw(canvas);
-        }
+        MainGame.getSingleton().draw(canvas);
 //        fighter.draw(canvas);
         canvas.drawText("FPS: " + framesPerSecond,100,100,fpsPaint);
         //Log.d(TAG,"onDraw()");
@@ -94,21 +81,6 @@ public class GameView extends View implements Choreographer.FrameCallback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        if ( (action == MotionEvent.ACTION_MOVE) || (action == MotionEvent.ACTION_DOWN)){
-            int x = (int) event.getX();
-            int y = (int) event.getY();
-            fighter.setPosition(x,y);
-            return true;
-        }
-//        switch (action){
-//            case MotionEvent.ACTION_DOWN:
-//            case MotionEvent.ACTION_MOVE:
-//                int x = (int) event.getX();
-//                int y = (int) event.getY();
-//                fighter.setPosition(x,y);
-//                return true;
-//        }
-        return super.onTouchEvent(event);
+        return MainGame.getSingleton().onTouchEvent(event);
     }
 }

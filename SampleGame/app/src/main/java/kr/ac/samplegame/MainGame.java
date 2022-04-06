@@ -1,5 +1,11 @@
 package kr.ac.samplegame;
 
+import android.graphics.Canvas;
+import android.view.MotionEvent;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 public class MainGame {
     public static MainGame getSingleton() {
         if (singleton == null){
@@ -7,8 +13,55 @@ public class MainGame {
         }
         return singleton;
     }
+
     private MainGame(){
-        
+
     }
     private static MainGame singleton;
+    private static final int BALL_COUNT = 10;
+    private ArrayList<GameObject> objects = new ArrayList<>();
+    private Fighter fighter;
+
+    public void init() {
+        Random random = new Random();
+        for (int i = 0;i<BALL_COUNT;++i){
+            int dx = random.nextInt(10) + 5;
+            int dy = random.nextInt(10) + 5;
+            Ball ball = new Ball(dx,dy);
+            objects.add(ball);
+        }
+        fighter = new Fighter();
+        objects.add(fighter);
+    }
+
+    public void update() {
+        for(GameObject gobj : objects){
+            gobj.update();
+        }
+    }
+
+    public void draw(Canvas canvas){
+        for(GameObject gobj : objects){
+            gobj.draw(canvas);
+        }
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        if ( (action == MotionEvent.ACTION_MOVE) || (action == MotionEvent.ACTION_DOWN)){
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+            fighter.setPosition(x,y);
+            return true;
+        }
+//        switch (action){
+//            case MotionEvent.ACTION_DOWN:
+//            case MotionEvent.ACTION_MOVE:
+//                int x = (int) event.getX();
+//                int y = (int) event.getY();
+//                fighter.setPosition(x,y);
+//                return true;
+//        }
+        return false;
+    }
 }
