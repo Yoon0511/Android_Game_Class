@@ -30,6 +30,9 @@ public class Ball implements GameObject{
 //    }
 
     public void update() {
+        int dx = this.dx * MainGame.getSingleton().frameTime;
+        int dy = this.dy * MainGame.getSingleton().frameTime;
+
         dstRect.offset(dx, dy);
 
         if(dx > 0){
