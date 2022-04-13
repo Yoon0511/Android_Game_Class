@@ -29,6 +29,10 @@ public class MainGame {
     private ArrayList<GameObject> objects = new ArrayList<>();
     private Fighter fighter;
 
+    public static void clear() {
+        singleton = null;
+    }
+
     public void init() {
 //        Random random = new Random();
 //        float min = Metrics.size(R.dimen.ball_speed_min);
@@ -40,6 +44,9 @@ public class MainGame {
 //            Ball ball = new Ball(dx, dy);
 //            objects.add(ball);
 //        }
+        objects.clear();
+
+        objects.add(new EnemyGenerator());
 
         float fighterY = Metrics.height - Metrics.size(R.dimen.fighter_y_offset);
         fighter = new Fighter(Metrics.width / 2, fighterY);
@@ -91,5 +98,9 @@ public class MainGame {
                 objects.remove(gameObject);
             }
         });
+    }
+
+    public int objectCount() {
+        return objects.size();
     }
 }
