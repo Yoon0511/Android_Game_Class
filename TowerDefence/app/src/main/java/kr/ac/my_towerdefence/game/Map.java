@@ -105,5 +105,13 @@ public class Map implements GameObject {
         return map;
     }
 
+    @Override
+    public void update() {
 
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+
+    }
 }
