@@ -5,12 +5,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
+import java.util.ArrayList;
+
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight02.framework.BoxCollidable;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight02.framework.GameObject;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight02.framework.Metrics;
 import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight02.R;
+import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight02.framework.Recyclable;
+import kr.ac.tukorea.ge.sgp02.s12345678.dragonflight02.framework.RecycleBin;
 
-public class Bullet implements GameObject, BoxCollidable {
+public class Bullet implements GameObject, BoxCollidable ,Recyclable{
     protected float x, y;
     protected final float length;
     protected final float dy;
@@ -19,6 +23,21 @@ public class Bullet implements GameObject, BoxCollidable {
     private static float laserWidth;
 
     protected RectF boundingRect = new RectF();
+//    private static ArrayList<Bullet> recycleBin = new ArrayList<>();
+    public static Bullet get(float x, float y) {
+        Bullet bullet = (Bullet) RecycleBin.get((Bullet.class));
+        if (bullet != null) {
+//            Bullet bullet = recycleBin.remove(0);
+            bullet.set(x, y);
+            return bullet;
+        }
+        return new Bullet(x, y);
+    }
+
+    private void set(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public Bullet(float x, float y) {
         this.x = x;
@@ -42,6 +61,7 @@ public class Bullet implements GameObject, BoxCollidable {
         boundingRect.set(x-hw,y,x+hw,y-length);
         if(y<0){
             MainGame.getInstance().remove(this);
+//            recycleBin.add(this);
         }
     }
 
@@ -53,5 +73,10 @@ public class Bullet implements GameObject, BoxCollidable {
     @Override
     public RectF getBoundingBox() {
         return boundingRect;
+    }
+
+    @Override
+    public void finish() {
+
     }
 }
