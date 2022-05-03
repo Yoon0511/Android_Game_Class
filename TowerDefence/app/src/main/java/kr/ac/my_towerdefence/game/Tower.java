@@ -42,9 +42,6 @@ public class Tower extends Sprite {
                 elapsedTimeForFire -= fireInterval;
             }
         }
-
-
-
     }
 
     public void setTarget(float tx,float ty){

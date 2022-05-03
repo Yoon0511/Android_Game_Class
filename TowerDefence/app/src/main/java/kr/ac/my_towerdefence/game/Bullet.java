@@ -72,7 +72,6 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
         angle = (float) Math.atan2(ty - this.y, tx - this.x);
         dx = (float) (speed * Math.cos(angle));
         dy = (float) (speed * Math.sin(angle));
-
     }
 
     @Override
