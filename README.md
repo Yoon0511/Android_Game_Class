@@ -71,3 +71,6 @@ TowerDefense
 7주차|인게임 UI 구현|
 8주차|사운드 추가|
 9주차|완성|
+  
+# 통계
+![제목 없음](https://user-images.githubusercontent.com/42472602/166585542-937b7bcb-00f9-4464-acf8-47154f06e9fa.png)
