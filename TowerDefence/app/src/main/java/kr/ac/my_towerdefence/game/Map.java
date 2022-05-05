@@ -80,6 +80,7 @@ public class Map implements GameObject {
                 }
             }
         }
+
         Collections.sort(roadTile, new Comparator<Tile>() {
             @Override
             public int compare(Tile tile, Tile t1) {
