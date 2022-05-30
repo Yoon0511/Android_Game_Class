@@ -4,6 +4,8 @@ import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -30,6 +32,11 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
     private  float orgy =  MainGame.getInstance().roadTileAt(0).getX();
 
     private int tartgetIndex = 1;
+    private static PathMeasure pathMeasure;
+
+    public static void setPath(Path path){
+        Enemy.pathMeasure = new PathMeasure(path,false);
+    }
     protected static int[] BITMAP_IDS = {
            R.mipmap.enemy00,
     };
@@ -132,27 +139,6 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
            setTartPosistion(tartgetIndex);
            dis = 5.0f;
        }
-//       if((dx > 0 && x + dx > targetX) ||(dx < 0 && x + dx < targetX)){
-//           dx = targetX - x;
-//           x = targetX;
-//           this.dx = 0;
-//       }else{
-//           x += dx;
-//       }
-//       float dy = this.dy * frameTime;
-//       if((dy > 0 && y + dy > targetY) || (dy < 0 && y + dy < targetY)){
-//           dy = targetY - y;
-//           y = targetY;
-//           this.dy = 0;
-//       }else{
-//           y += dy;
-//       }
-//        Log.d(TAG, "dx: "+dx+ "dy: "+dy);
-//        if(dx == 0 && dy == 0){
-//            tartgetIndex++;
-//            setTartPosistion(tartgetIndex);
-//            Log.d(TAG, "move: "+tartgetIndex);
-//        }
         setDstRectWithRadius();
         boundingRect.set(dstRect);
         boundingRect.inset(inset, inset);

@@ -1,6 +1,7 @@
 package kr.ac.my_towerdefence.game;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
 import android.opengl.Matrix;
 import android.util.Log;
 
@@ -23,8 +24,12 @@ public class Map implements GameObject {
             R.mipmap.tile00,
             R.mipmap.tile01
     };
+    protected class Point {
+        float x, y;
+        float dx, dy;
+    }
     private String TAG = Map.class.getSimpleName();
-
+    protected ArrayList<Point> points = new ArrayList<>();
     protected static int[][] map = {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -40,6 +45,7 @@ public class Map implements GameObject {
 
     //    protected static int[][] map = new int[maxY][maxX];
     protected static final ArrayList<Tile> roadTile = new ArrayList<>();
+    private static Path path;
 
     public Map(){
 
@@ -77,10 +83,16 @@ public class Map implements GameObject {
                 else{
                     tile = new Tile(tileX,tileY,tileWidth,tileHeight,BITMAP_IDS[1],order);
                     roadTile.add(tile);
+                    Point point = new Point();
+                    point.x = tileX;
+                    point.y = tileY;
+                    points.add(point);
+                    buildPath();
                 }
                 MainGame.getInstance().add(MainGame.Layer.map,tile);
             }
         }
+        Enemy.setPath(path);
 
         Collections.sort(roadTile, new Comparator<Tile>() {
             @Override
@@ -94,9 +106,6 @@ public class Map implements GameObject {
             }
         });
 
-        for(Tile t : roadTile){
-            Log.d(TAG, "tx:" + t.getX() + "ty: " + t.getY());
-        }
     };
 
     public ArrayList<Tile> getRoadTile() {
@@ -107,6 +116,40 @@ public class Map implements GameObject {
         return map;
     }
 
+    protected void buildPath() {
+        int ptCount = points.size();
+        if (ptCount < 2) return;
+
+        for (int i = ptCount - 2; i < ptCount; i++) {
+            Point pt = points.get(i);
+            if (i == 0) { // only next
+                Point next = points.get(i + 1);
+                pt.dx = ((next.x - pt.x));
+                pt.dy = ((next.y - pt.y));
+            } else if (i == ptCount - 1) { // only prev
+                Point prev = points.get(i - 1);
+                pt.dx = ((pt.x - prev.x));
+                pt.dy = ((pt.y - prev.y));
+            } else { // prev and next
+                Point next = points.get(i + 1);
+                Point prev = points.get(i - 1);
+                pt.dx = ((next.x - prev.x));
+                pt.dy = ((next.y - prev.y));
+            }
+        }
+
+        Point prev = points.get(0);
+        path = new Path();
+        path.moveTo(prev.x, prev.y);
+        for (int i = 1; i < ptCount; i++) {
+            Point pt = points.get(i);
+            path.cubicTo(
+                    prev.x + prev.dx, prev.y + prev.dy,
+                    pt.x - pt.dx, pt.y - pt.dy,
+                    pt.x, pt.y);
+            prev = pt;
+        }
+    }
     @Override
     public void update() {
 
