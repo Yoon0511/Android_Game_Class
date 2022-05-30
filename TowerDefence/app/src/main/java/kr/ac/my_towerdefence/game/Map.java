@@ -83,7 +83,6 @@ public class Map implements GameObject {
                 else{
                     tile = new Tile(tileX,tileY,tileWidth,tileHeight,BITMAP_IDS[1],order);
                     roadTile.add(tile);
-
                 }
                 MainGame.getInstance().add(MainGame.Layer.map,tile);
             }

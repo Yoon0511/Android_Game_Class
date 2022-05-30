@@ -9,7 +9,7 @@ import kr.ac.my_towerdefence.framework.GameObject;
 import kr.ac.my_towerdefence.framework.Metrics;
 
 public class EnemyGenerator implements GameObject {
-    private static final float INITIAL_SPAWN_INTERVAL = 2.0f;
+    private static final float INITIAL_SPAWN_INTERVAL = 0.5f;
     private final float spawnInterval;
     private final float fallSpeed;
     private float elapsedTime;
@@ -37,8 +37,11 @@ public class EnemyGenerator implements GameObject {
     private void spawn() {
         wave++;
         Random rand = new Random();
-        float x = MainGame.getInstance().roadTileAt(0).getX() + 10;
-        float y = MainGame.getInstance().roadTileAt(0).getY() + 10;
+//        float x = MainGame.getInstance().roadTileAt(0).getX() + 10;
+//        float y = MainGame.getInstance().roadTileAt(0).getY() + 10;
+
+        float x = 300;
+        float y = 200;
 
         int level = (wave + 15) / 10 - rand.nextInt(3);
         if (level < Enemy.MIN_LEVEL) level = Enemy.MIN_LEVEL;
