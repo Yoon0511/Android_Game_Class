@@ -24,6 +24,17 @@ public class Map implements GameObject {
             R.mipmap.tile00,
             R.mipmap.tile01
     };
+
+    public float getTileWidth() {
+        return tileWidth;
+    }
+
+    public float getTileHeight() {
+        return tileHeight;
+    }
+    private float tileWidth;
+    private float tileHeight;
+
     protected class Point {
         float x, y;
         float dx, dy;
@@ -68,8 +79,8 @@ public class Map implements GameObject {
 //        float tileWidth = BitmapPool.get(BITMAP_IDS[0]).getWidth();
 //        float tileHeight = BitmapPool.get(BITMAP_IDS[0]).getHeight();
 
-        float tileWidth = Metrics.width/maxX;
-        float tileHeight = Metrics.height/maxY;
+        tileWidth = Metrics.width/maxX;
+        tileHeight = Metrics.height/maxY;
 
         for (int y = 0; y < maxY; ++y) {
             for (int x = 0; x < maxX; ++x) {

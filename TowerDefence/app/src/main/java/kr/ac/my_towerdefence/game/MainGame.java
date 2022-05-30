@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ import kr.ac.my_towerdefence.framework.RecycleBin;
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
     private Paint collisionPaint;
-    Score score;
-    Map map;
-
+    private Score score;
+    private Map map;
+    private Tile tile;
 
     public static MainGame getInstance() {
         if (singleton == null) {
@@ -57,16 +58,17 @@ public class MainGame {
         add(Layer.controller, new EnemyGenerator());
         add(Layer.controller, new CollisionChecker());
 
-        //float fighterY = Metrics.height - Metrics.size(R.dimen.fighter_y_offset);
-        //fighter = new Fighter(Metrics.width / 2, fighterY);
-        float tileWidth = Metrics.width/10;
-        float tileHeight = Metrics.height/10;
-        Tower tower = new Tower(tileWidth * 6 + tileWidth/2,tileHeight * 7 + tileHeight/2);
-        add(Layer.player, tower);
-
         map = new Map();
         map.init();
         add(Layer.map,map);
+        //float fighterY = Metrics.height - Metrics.size(R.dimen.fighter_y_offset);
+        //fighter = new Fighter(Metrics.width / 2, fighterY);
+        float tileWidth = map.getTileWidth();
+        float tileHeight = map.getTileHeight();
+        Tower tower = new Tower(tileWidth * 6 + tileWidth/2,tileHeight * 7 + tileHeight/2);
+        add(Layer.player, tower);
+
+
 
         //score = new Score();
         //add(Layer.ui, score);
@@ -115,12 +117,12 @@ public class MainGame {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                return true;
+        if (event.getAction() != MotionEvent.ACTION_DOWN) {
+            return false;
         }
+        int x = (int) (event.getX() / map.getTileWidth());
+        int y = (int) (event.getY() / map.getTileHeight());
+        Log.d(TAG, "onTouchEvent: " + x + " - " + y);
         return false;
     }
 
