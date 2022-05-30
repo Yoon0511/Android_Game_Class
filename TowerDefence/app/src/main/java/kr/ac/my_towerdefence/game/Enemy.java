@@ -9,6 +9,8 @@ import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.util.Log;
 
+import java.util.Random;
+
 import kr.ac.my_towerdefence.R;
 import kr.ac.my_towerdefence.framework.AnimSprite;
 import kr.ac.my_towerdefence.framework.BitmapPool;
@@ -33,6 +35,8 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
 
     private int tartgetIndex = 1;
     private static PathMeasure pathMeasure;
+    private float dist;
+    private static Random random = new Random();
 
     public static void setPath(Path path){
         Enemy.pathMeasure = new PathMeasure(path,false);
@@ -103,49 +107,71 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
 
     }
 
+    private float[] pos = new float[2];
+    private float[] tan = new float[2];
+
     void move(){
         float frameTime = MainGame.getInstance().frameTime;
-
-       float speed = this.speed * frameTime;
-       if(Math.abs(targetX - x) < 2)
-       {
-           x = targetX;
-       }
-       else
-       {
-           if(targetX < x)
-           {
-               x -= speed;
-           }else{
-               x += speed;
-           }
-       }
-
-        if(Math.abs(targetY-y) < 2)
-        {
-            y = targetY;
-        }
-        else{
-            if(targetY < y){
-                y -= speed;
-            }else{
-                y += speed;
-            }
-        }
-
-       float dis = (float) sqrt((targetY - y)  * (targetY - y) + (targetX - x) * (targetX - x));
-       if(dis <= 3.0f){
-           tartgetIndex++;
-           setTartPosistion(tartgetIndex);
-           dis = 5.0f;
-       }
-        setDstRectWithRadius();
-        boundingRect.set(dstRect);
-        boundingRect.inset(inset, inset);
-        if (dstRect.top > Metrics.height) {
+        dist += speed * frameTime;
+        if (dist > pathMeasure.getLength()) {
             MainGame.getInstance().remove(this);
-            //recyceBin.add(this);
+            return;
         }
+
+//        dx += (2 * radius * random.nextFloat() - radius) * frameTime;
+//        if (dx < -radius) dx = -radius;
+//        else if (dx > radius) dx = radius;
+//        dy += (2 * radius * random.nextFloat() - radius) * frameTime;
+//        if (dy < -radius) dy = -radius;
+//        else if (dy > radius) dy = radius;
+        dx = speed * frameTime;
+        dy = speed * frameTime;
+        pathMeasure.getPosTan(dist, pos, tan);
+        x = pos[0];
+        y = pos[1];
+        angle = (float)(Math.atan2(tan[1], tan[0]) * 180 / Math.PI) ;
+        setDstRectWithRadius();
+
+//       float speed = this.speed * frameTime;
+//       if(Math.abs(targetX - x) < 2)
+//       {
+//           x = targetX;
+//       }
+//       else
+//       {
+//           if(targetX < x)
+//           {
+//               x -= speed;
+//           }else{
+//               x += speed;
+//           }
+//       }
+//
+//        if(Math.abs(targetY-y) < 2)
+//        {
+//            y = targetY;
+//        }
+//        else{
+//            if(targetY < y){
+//                y -= speed;
+//            }else{
+//                y += speed;
+//            }
+//        }
+//
+//       float dis = (float) sqrt((targetY - y)  * (targetY - y) + (targetX - x) * (targetX - x));
+//       if(dis <= 3.0f){
+//           tartgetIndex++;
+//           setTartPosistion(tartgetIndex);
+//           dis = 5.0f;
+//       }
+//        setDstRectWithRadius();
+//        boundingRect.set(dstRect);
+//        boundingRect.inset(inset, inset);
+//        if (dstRect.top > Metrics.height) {
+//            MainGame.getInstance().remove(this);
+//            //recyceBin.add(this);
+//        }
     }
     void nextRoad(){
 

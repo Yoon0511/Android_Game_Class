@@ -1,8 +1,8 @@
 package kr.ac.my_towerdefence.game;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Path;
-import android.opengl.Matrix;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -83,16 +83,11 @@ public class Map implements GameObject {
                 else{
                     tile = new Tile(tileX,tileY,tileWidth,tileHeight,BITMAP_IDS[1],order);
                     roadTile.add(tile);
-                    Point point = new Point();
-                    point.x = tileX;
-                    point.y = tileY;
-                    points.add(point);
-                    buildPath();
+
                 }
                 MainGame.getInstance().add(MainGame.Layer.map,tile);
             }
         }
-        Enemy.setPath(path);
 
         Collections.sort(roadTile, new Comparator<Tile>() {
             @Override
@@ -106,6 +101,23 @@ public class Map implements GameObject {
             }
         });
 
+        for(Tile T : roadTile)
+        {
+            Point point = new Point();
+            point.x = T.getX();
+            point.y = T.getY();
+            points.add(point);
+        }
+        buildPath();
+
+        Matrix matrix = new Matrix();
+        matrix.reset();
+        float scale = tileWidth / 25f;
+        matrix.setScale(scale, scale);
+        Path transformedPath = new Path();
+        path.transform(matrix, transformedPath);
+
+        Enemy.setPath(path);
     };
 
     public ArrayList<Tile> getRoadTile() {
