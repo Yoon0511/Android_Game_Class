@@ -33,7 +33,6 @@ public class CollisionChecker implements GameObject {
                     boolean dead = enemy.decreaseLife(power);
                     if (dead) {
                         game.remove(enemy);
-//                        game.score.add(enemy.getScore());
                     }
                     break;
                 }

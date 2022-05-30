@@ -1,14 +1,10 @@
 package kr.ac.my_towerdefence.game;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 
 import kr.ac.my_towerdefence.R;
 import kr.ac.my_towerdefence.framework.BoxCollidable;
-import kr.ac.my_towerdefence.framework.GameObject;
 import kr.ac.my_towerdefence.framework.Metrics;
 import kr.ac.my_towerdefence.framework.Recyclable;
 import kr.ac.my_towerdefence.framework.RecycleBin;
@@ -29,7 +25,7 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
     public Bullet(float x, float y,float power,float tx,float ty) {
         super(x, y, R.dimen.bullet_radious, R.mipmap.bullet);
         this.power = power;
-        setTartPosistion(tx,ty);
+        setTargetAngle(tx,ty);
     }
 
     //    private static ArrayList<Bullet> recycleBin = new ArrayList<>();
@@ -47,7 +43,7 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
         this.x = x;
         this.y = y;
         this.power = power;
-        setTartPosistion(tx,ty);
+        setTargetAngle(tx,ty);
     }
 
     public void update() {
@@ -65,7 +61,7 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
 //        }
 
     }
-    public void setTartPosistion(float tx,float ty) {
+    public void setTargetAngle(float tx, float ty) {
         this.tx = tx;
         this.ty = ty;
 

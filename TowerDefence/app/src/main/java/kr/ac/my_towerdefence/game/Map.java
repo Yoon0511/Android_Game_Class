@@ -16,7 +16,7 @@ import kr.ac.my_towerdefence.framework.Metrics;
 import kr.ac.my_towerdefence.framework.Sprite;
 
 public class Map implements GameObject {
-    static final int maxX = 10;
+    static final int maxX = 15;
     static final int maxY = 10;
 
     protected static int[] BITMAP_IDS = {
@@ -26,16 +26,16 @@ public class Map implements GameObject {
     private String TAG = Map.class.getSimpleName();
 
     protected static int[][] map = {
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,11,10,9,8,0,0,0},
-            {0,0,0,12,0,0,7,0,0,0},
-            {0,0,0,13,0,0,6,0,0,0},
-            {0,0,0,14,0,0,5,0,0,0},
-            {18,17,16,15,0,0,4,3,2,1},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,25,24,23,0,0,0,0,12,11,10,9,8,0,0},
+            {27,26,0,22,0,0,0,0,13,0,0,0,7,0,0},
+            {0,0,0,21,0,0,0,0,14,0,0,0,6,0,0},
+            {0,0,0,20,19,18,17,16,15,0,0,0,5,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,4,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,3,2,1},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     };
 
     //    protected static int[][] map = new int[maxY][maxX];
@@ -78,6 +78,7 @@ public class Map implements GameObject {
                     tile = new Tile(tileX,tileY,tileWidth,tileHeight,BITMAP_IDS[1],order);
                     roadTile.add(tile);
                 }
+                MainGame.getInstance().add(MainGame.Layer.map,tile);
             }
         }
 

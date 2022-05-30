@@ -119,9 +119,6 @@ public class MainGame {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-                fighter.setTargetPosition(x, y);
                 return true;
         }
         return false;
