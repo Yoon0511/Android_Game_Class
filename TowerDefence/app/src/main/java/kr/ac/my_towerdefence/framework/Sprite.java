@@ -48,4 +48,5 @@ public class Sprite implements GameObject {
     public float getY(){
         return y;
     }
+    public void setPos(float x,float y) {this.x = x;this.y = y;}
 }

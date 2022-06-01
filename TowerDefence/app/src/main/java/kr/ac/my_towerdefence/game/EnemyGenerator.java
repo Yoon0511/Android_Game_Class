@@ -9,7 +9,7 @@ import kr.ac.my_towerdefence.framework.GameObject;
 import kr.ac.my_towerdefence.framework.Metrics;
 
 public class EnemyGenerator implements GameObject {
-    private static final float INITIAL_SPAWN_INTERVAL = 0.5f;
+    private static final float INITIAL_SPAWN_INTERVAL = 1.0f;
     private final float spawnInterval;
     private final float fallSpeed;
     private float elapsedTime;

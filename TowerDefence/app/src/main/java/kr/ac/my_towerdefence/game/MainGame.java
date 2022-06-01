@@ -16,6 +16,7 @@ import kr.ac.my_towerdefence.framework.GameView;
 import kr.ac.my_towerdefence.framework.Metrics;
 import kr.ac.my_towerdefence.framework.Recyclable;
 import kr.ac.my_towerdefence.framework.RecycleBin;
+import kr.ac.my_towerdefence.framework.Touchable;
 
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
@@ -24,6 +25,7 @@ public class MainGame {
     private Map map;
     private Tile tile;
     private Ui ui;
+    private Tower[][] TOWER = {};
     public static MainGame getInstance() {
         if (singleton == null) {
             singleton = new MainGame();
@@ -118,17 +120,26 @@ public class MainGame {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() != MotionEvent.ACTION_DOWN) {
-            return false;
-        }
-        int x = (int) (event.getX() / map.getTileWidth());
-        int y = (int) (event.getY() / map.getTileHeight());
-        Log.d(TAG, "onTouchEvent: " + x + " - " + y);
+//        if (event.getAction() != MotionEvent.ACTION_DOWN) {
+//            return false;
+//        }
+//        int x = (int) (event.getX() / map.getTileWidth());
+//        int y = (int) (event.getY() / map.getTileHeight());
+//        Log.d(TAG, "onTouchEvent: " + x + " - " + y);
 
-        if(ui.onTouchEvent(event)){
-            return true;
+        ArrayList<GameObject> gameObjects = layers.get(Layer.controller.ordinal());
+        for (GameObject gobj : gameObjects) {
+            if (!(gobj instanceof Touchable)) {
+                continue;
+            }
+            boolean processed = ((Touchable) gobj).onTouchEvent(event);
+            if (processed) return true;
         }
         return false;
+    }
+
+    protected int getTouchLayerIndex() {
+        return -1;
     }
 
     public void add(Layer layer, GameObject gameObject) {
