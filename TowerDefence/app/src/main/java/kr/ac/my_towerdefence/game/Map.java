@@ -17,7 +17,7 @@ import kr.ac.my_towerdefence.framework.Metrics;
 import kr.ac.my_towerdefence.framework.Sprite;
 
 public class Map implements GameObject {
-    static final int maxX = 15;
+    static final int maxX = 17;
     static final int maxY = 10;
 
     protected static int[] BITMAP_IDS = {
@@ -83,7 +83,7 @@ public class Map implements GameObject {
         tileHeight = Metrics.height/maxY;
 
         for (int y = 0; y < maxY; ++y) {
-            for (int x = 0; x < maxX; ++x) {
+            for (int x = 0; x < maxX-2; ++x) {
                 int order = map[y][x];
                 float tileX = x * tileWidth + tileWidth/2;
                 float tileY = y * tileHeight + tileHeight/2;
