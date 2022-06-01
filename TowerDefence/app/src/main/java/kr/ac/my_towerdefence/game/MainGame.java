@@ -23,7 +23,7 @@ public class MainGame {
     private Score score;
     private Map map;
     private Tile tile;
-
+    private Ui ui;
     public static MainGame getInstance() {
         if (singleton == null) {
             singleton = new MainGame();
@@ -69,7 +69,8 @@ public class MainGame {
         add(Layer.player, tower);
 
 
-
+        ui = new Ui();
+        add(Layer.ui,ui);
         //score = new Score();
         //add(Layer.ui, score);
 
@@ -123,6 +124,10 @@ public class MainGame {
         int x = (int) (event.getX() / map.getTileWidth());
         int y = (int) (event.getY() / map.getTileHeight());
         Log.d(TAG, "onTouchEvent: " + x + " - " + y);
+
+        if(ui.onTouchEvent(event)){
+            return true;
+        }
         return false;
     }
 

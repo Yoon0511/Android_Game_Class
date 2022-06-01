@@ -23,7 +23,8 @@ public class Sprite implements GameObject {
         dstRect.set(x - w / 2, y - h / 2, x + w / 2, y + h / 2);
         bitmap = BitmapPool.get(bitmapResId);
     }
-
+    protected Sprite() {
+    }
     @Override
     public void update() {
     }
