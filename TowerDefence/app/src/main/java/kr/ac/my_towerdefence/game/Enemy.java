@@ -59,6 +59,9 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
         this.speed = speed;
         this.level = level;
         life = maxLife = level * 10;
+        setDstRectWithRadius();
+        boundingRect.set(dstRect);
+        boundingRect.inset(inset, inset);
         gauge.setValue(1.0f);
     }
 
@@ -69,7 +72,9 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
         this.level = level;
         this.speed = speed;
         life = maxLife = level * 10;
-
+        setDstRectWithRadius();
+        boundingRect.set(dstRect);
+        boundingRect.inset(inset, inset);
         gauge = new Gauge(
                 Metrics.size(R.dimen.enemy_gauge_width_fg), R.color.enemy_gauge_fg,
                 Metrics.size(R.dimen.enemy_gauge_width_bg), R.color.enemy_gauge_bg,
@@ -116,7 +121,7 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
 
         setDstRectWithRadius();
         boundingRect.set(dstRect);
-        boundingRect.inset(inset, inset);
+        boundingRect.inset(inset*1.2f, inset);
 
     }
     void nextRoad(){

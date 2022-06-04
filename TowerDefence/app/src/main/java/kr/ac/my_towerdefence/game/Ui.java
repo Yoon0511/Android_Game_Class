@@ -35,29 +35,10 @@ public class Ui extends Sprite implements Touchable {
         dstRect.set(x - w / 2, y - h / 2, x + w / 2, y + h / 2);
         moveTowerImg = new Sprite(-100,-100,R.dimen.tower_radious,R.mipmap.tower00);
         MainGame.getInstance().add(MainGame.Layer.controller,moveTowerImg);
+        towerBtnInit(h * 0.2f,R.mipmap.tower00);
+        towerBtnInit(h * 0.4f,R.mipmap.icetower);
+        towerBtnInit(h * 0.6f,R.mipmap.explosiontower);
 
-        MainGame.getInstance().add(MainGame.Layer.controller,new Button(
-                this.x, h * 0.3f, tileWidth * 1.5f, tileHeight * 1.5f, R.mipmap.tower00, R.mipmap.tower00, new Button.Callback() {
-            @Override
-            public boolean onTouch(Button.Action action,MotionEvent e,Bitmap bitmap) {
-                if(action == Button.Action.pressed)
-                {
-                    setMoveTowerImg(e.getX(),e.getY());
-                    return true;
-                }
-                else if(action == Button.Action.released)
-                {
-                    int x = (int) (e.getX() / tileWidth);
-                    int y = (int) (e.getY() / tileHeight);
-                    setMoveTowerImg(-100,-100);
-                    CreateTower(x,y);
-
-                    return true;
-                }
-                return false;
-            }
-        }
-        ));
     }
     public void CreateTower(int mapx,int mapy)
     {
@@ -65,8 +46,9 @@ public class Ui extends Sprite implements Touchable {
         MainGame.getInstance().add(MainGame.Layer.player, tower);
     }
 
-    public void setMoveTowerImg(float x,float y)
+    public void setMoveTowerImg(float x,float y,Bitmap bitmap)
     {
+        moveTowerImg.setBitmap(bitmap);
         moveTowerImg.setPos(x,y);
         moveTowerImg.setDstRectWithRadius();
     }
@@ -78,5 +60,31 @@ public class Ui extends Sprite implements Touchable {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         return false;
+    }
+
+    private void towerBtnInit(float y,int bitmap)
+    {
+        MainGame.getInstance().add(MainGame.Layer.controller,new Button(
+                this.x, y, tileWidth * 1.5f, tileHeight * 1.5f,bitmap, bitmap, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action,MotionEvent e,Bitmap bitmap) {
+                if(action == Button.Action.pressed)
+                {
+                    setMoveTowerImg(e.getX(),e.getY(),bitmap);
+                    return true;
+                }
+                else if(action == Button.Action.released)
+                {
+                    int x = (int) (e.getX() / tileWidth);
+                    int y = (int) (e.getY() / tileHeight);
+                    setMoveTowerImg(-100,-100,bitmap);
+                    CreateTower(x,y);
+
+                    return true;
+                }
+                return false;
+            }
+        }
+        ));
     }
 }
