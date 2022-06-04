@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import kr.ac.my_towerdefence.R;
+import kr.ac.my_towerdefence.framework.BitmapPool;
 import kr.ac.my_towerdefence.framework.BoxCollidable;
 import kr.ac.my_towerdefence.framework.GameObject;
 import kr.ac.my_towerdefence.framework.GameView;
@@ -25,7 +26,7 @@ public class MainGame {
     private Map map;
     private Tile tile;
     private Ui ui;
-    private Tower[][] TOWER = {};
+    public Tower[][] TOWER = new Tower[15][10];
     public static MainGame getInstance() {
         if (singleton == null) {
             singleton = new MainGame();
@@ -67,7 +68,7 @@ public class MainGame {
         //fighter = new Fighter(Metrics.width / 2, fighterY);
         float tileWidth = map.getTileWidth();
         float tileHeight = map.getTileHeight();
-        Tower tower = new Tower(tileWidth * 6 + tileWidth/2,tileHeight * 7 + tileHeight/2);
+        Tower tower = new Tower(tileWidth * 6 + tileWidth/2,tileHeight * 7 + tileHeight/2, BitmapPool.get(R.mipmap.tower00));
         add(Layer.player, tower);
 
 
@@ -124,6 +125,7 @@ public class MainGame {
         return layers.get(layer.ordinal());
     }
     public Tile roadTileAt(int index) {return map.getRoadTile().get(index);}
+    public int[][] getmap() {return map.getMap();}
 
     public void draw(Canvas canvas) {
         for (ArrayList<GameObject> objects : layers) {

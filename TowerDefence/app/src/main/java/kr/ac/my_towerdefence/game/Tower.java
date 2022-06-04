@@ -1,5 +1,6 @@
 package kr.ac.my_towerdefence.game;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import kr.ac.my_towerdefence.R;
+import kr.ac.my_towerdefence.framework.BitmapPool;
 import kr.ac.my_towerdefence.framework.GameObject;
 import kr.ac.my_towerdefence.framework.Metrics;
 import kr.ac.my_towerdefence.framework.Sprite;
@@ -25,11 +27,12 @@ public class Tower extends Sprite {
     private String TAG = Tower.class.getSimpleName();
     private Paint iceTowerPaint = new Paint();
 
-    public Tower(float x, float y) {
+    public Tower(float x, float y, Bitmap createBitmap) {
         super(x, y, R.dimen.tower_radious, R.mipmap.tower00);
         this.level = 1;
         this.range = 3 * Map.tileWidth * level;
         this.power = 5;
+        bitmap = createBitmap;
         fireInterval = Metrics.floatValue(R.dimen.tower_fire_interval);
         iceTowerPaint.setColor(Color.BLUE);
     }

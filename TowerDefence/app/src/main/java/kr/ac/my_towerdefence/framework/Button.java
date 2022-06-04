@@ -45,7 +45,7 @@ public class Button extends Sprite implements Touchable {
                 bitmap = normalBitmap;
                 return callback.onTouch(Action.released,e,normalBitmap);
             case MotionEvent.ACTION_MOVE:
-                return callback.onTouch(Action.pressed,e,normalBitmap);
+                return callback.onTouch(Action.move,e,normalBitmap);
         }
         return false;
     }

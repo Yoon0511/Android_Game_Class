@@ -24,6 +24,7 @@ public class Ui extends Sprite implements Touchable {
     private RectF dstRect = new RectF();
     private Button[] towerBtns;
     private Sprite moveTowerImg;
+    private int[][] map;
 
     public Ui() {
         this.x = tileWidth * 16;
@@ -33,6 +34,8 @@ public class Ui extends Sprite implements Touchable {
         float h = tileHeight * 10;
         this.radius = w / 2;
         dstRect.set(x - w / 2, y - h / 2, x + w / 2, y + h / 2);
+        map = MainGame.getInstance().getmap();
+
         moveTowerImg = new Sprite(-100,-100,R.dimen.tower_radious,R.mipmap.tower00);
         MainGame.getInstance().add(MainGame.Layer.controller,moveTowerImg);
         towerBtnInit(h * 0.2f,R.mipmap.tower00);
@@ -40,10 +43,11 @@ public class Ui extends Sprite implements Touchable {
         towerBtnInit(h * 0.6f,R.mipmap.explosiontower);
 
     }
-    public void CreateTower(int mapx,int mapy)
+    public void CreateTower(int mapx,int mapy,Bitmap bitmap)
     {
-        Tower tower = new Tower(tileWidth * mapx + tileWidth/2,tileHeight * mapy + tileHeight/2);
+        Tower tower = new Tower(tileWidth * mapx + tileWidth/2,tileHeight * mapy + tileHeight/2,bitmap);
         MainGame.getInstance().add(MainGame.Layer.player, tower);
+        MainGame.getInstance().TOWER[mapx][mapy] = tower;
     }
 
     public void setMoveTowerImg(float x,float y,Bitmap bitmap)
@@ -70,18 +74,33 @@ public class Ui extends Sprite implements Touchable {
             public boolean onTouch(Button.Action action,MotionEvent e,Bitmap bitmap) {
                 if(action == Button.Action.pressed)
                 {
+                    if(bitmap == BitmapPool.get(R.mipmap.tower00)){
+                        Log.d(TAG,"click");
+                    }
                     setMoveTowerImg(e.getX(),e.getY(),bitmap);
                     return true;
                 }
-                else if(action == Button.Action.released)
-                {
+                else if(action == Button.Action.released) {
                     int x = (int) (e.getX() / tileWidth);
                     int y = (int) (e.getY() / tileHeight);
-                    setMoveTowerImg(-100,-100,bitmap);
-                    CreateTower(x,y);
+                    setMoveTowerImg(-100, -100, bitmap);
+                    if (x < 15 && x >= 0 && y >= 0 && y < 10) {
+                        if(MainGame.getInstance().TOWER[x][y] == null &&
+                        map[y][x] == 0)
+                        {
+                            CreateTower(x, y, bitmap);
+                        }
 
+                    }
                     return true;
                 }
+                else if(action == Button.Action.move) {
+                        if (bitmap == BitmapPool.get(R.mipmap.tower00)) {
+                            Log.d(TAG, "move");
+                        }
+                        setMoveTowerImg(e.getX(), e.getY(), bitmap);
+                        return true;
+                    }
                 return false;
             }
         }
