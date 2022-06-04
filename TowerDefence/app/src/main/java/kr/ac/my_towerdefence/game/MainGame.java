@@ -87,6 +87,29 @@ public class MainGame {
             layers.add(new ArrayList<>());
         }
     }
+    public Enemy findNearestEnemy(Tower cannon) {
+        float dist = Float.MAX_VALUE;
+        Enemy nearest = null;
+        float cx = cannon.getX();
+        float cy = cannon.getY();
+        ArrayList<GameObject> enemys = objectsAt(Layer.enemy);
+        for (GameObject gameObject: enemys) {
+            if (!(gameObject instanceof Enemy)) continue;
+            Enemy fly = (Enemy) gameObject;
+            float fx = fly.getX();
+            float fy = fly.getY();
+            float dx = cx - fx;
+            if (dx > dist) continue;
+            float dy = cy - fy;
+            if (dy > dist) continue;
+            float d = (float) Math.sqrt(dx * dx + dy * dy);
+            if (dist > d) {
+                dist = d;
+                nearest = fly;
+            }
+        }
+        return nearest;
+    }
 
     public void update(int elapsedNanos) {
         frameTime = elapsedNanos * 1e-9f; // 1_000_000_000.0f;
@@ -95,12 +118,7 @@ public class MainGame {
                 gobj.update();
             }
         }
-
-//        checkCollision();
     }
-
-//    private void checkCollision() {
-//    }
 
     public ArrayList<GameObject> objectsAt(Layer layer) {
         return layers.get(layer.ordinal());

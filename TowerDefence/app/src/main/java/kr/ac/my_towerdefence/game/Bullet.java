@@ -17,8 +17,8 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
     private float power;
     private float tx,ty;
     private float dx,dy;
-    private static final float speed = Metrics.size(R.dimen.bullet_initial_speed);;
-    private static final float size = Metrics.size(R.dimen.bullet_radious);;
+    private static final float speed = Metrics.size(R.dimen.bullet_initial_speed);
+    private static final float size = Metrics.size(R.dimen.bullet_radious);
     private float angle;
     private static final float inset = (Metrics.width / 10f) / 3;
 
@@ -44,6 +44,7 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
         this.y = y;
         this.power = power;
         setTargetAngle(tx,ty);
+
     }
 
     public void update() {
@@ -52,14 +53,7 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
         x += dx * frameTime;
 
         setDstRectWithRadius();
-
         boundingRect.set(dstRect);
-        boundingRect.inset(inset, inset);
-//        if (y < 0) {
-//            MainGame.getInstance().remove(this);
-//            //recycleBin.add(this);
-//        }
-
     }
     public void setTargetAngle(float tx, float ty) {
         this.tx = tx;

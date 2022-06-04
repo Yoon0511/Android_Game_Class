@@ -16,31 +16,40 @@ public class Tower extends Sprite {
     protected static int[] BITMAP_IDS = {
             R.mipmap.tower00,R.mipmap.tower01
     };
-
+    private int level,power;
+    private float range = 5 * Map.tileWidth * level;
     private float tx,ty;
     private float angle;
     private String TAG = Tower.class.getSimpleName();
 
     public Tower(float x, float y) {
         super(x, y, R.dimen.tower_radious, R.mipmap.tower00);
+        this.level = 1;
+        this.range = 5 * Map.tileWidth * level;
+        this.power = 5;
         fireInterval = Metrics.floatValue(R.dimen.tower_fire_interval);
     }
 
     public void update() {
         float frameTime = MainGame.getInstance().frameTime;
-        ArrayList<GameObject> enemies = MainGame.getInstance().objectsAt(MainGame.Layer.enemy);
+        Enemy enemy = MainGame.getInstance().findNearestEnemy(this);
 
-        if(!enemies.isEmpty()){
-            Enemy target = (Enemy) enemies.get(0);
-            setTarget(target.getX(),target.getY());
+        if(enemy == null) return;
+
+        float dx = enemy.getX() - x;
+        float dy = enemy.getY() - y;
+        double dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 1.2 * range) {
+            return;
         }
-
+        if (dist > range) {
+            return;
+        }
+        setTarget(enemy.getX(),enemy.getY());
         elapsedTimeForFire += frameTime;
         if (elapsedTimeForFire > fireInterval) {
-            if(!enemies.isEmpty()) {
-                fire();
-                elapsedTimeForFire -= fireInterval;
-            }
+            fire();
+            elapsedTimeForFire -= fireInterval;
         }
     }
 
@@ -50,7 +59,7 @@ public class Tower extends Sprite {
         angle = (float) Math.atan2(ty - this.y,tx - this.x);
     }
     private void fire() {
-        Bullet bullet = Bullet.get(x, y, 30,tx,ty);
+        Bullet bullet = Bullet.get(x, y, power,tx,ty);
         MainGame.getInstance().add(MainGame.Layer.bullet, bullet);
     }
 

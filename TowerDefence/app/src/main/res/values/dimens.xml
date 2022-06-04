@@ -20,7 +20,7 @@
     <dimen name="enemy_gauge_width_bg">4dp</dimen>
     <dimen name="tower_radious">20dp</dimen>
     <dimen name="bullet_initial_speed">150dp</dimen>
-    <dimen name="bullet_radious">20dp</dimen>
+    <dimen name="bullet_radious">10dp</dimen>
     <item name="fighter_fire_interval" type="dimen" format="float">0.2</item>
     <item name="tower_fire_interval" type="dimen" format="float">1.5</item>
 </resources>

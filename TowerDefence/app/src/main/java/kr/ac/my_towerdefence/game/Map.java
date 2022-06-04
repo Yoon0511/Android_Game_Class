@@ -32,8 +32,8 @@ public class Map implements GameObject {
     public float getTileHeight() {
         return tileHeight;
     }
-    private float tileWidth;
-    private float tileHeight;
+    public static float tileWidth;
+    public static float tileHeight;
 
     protected class Point {
         float x, y;
