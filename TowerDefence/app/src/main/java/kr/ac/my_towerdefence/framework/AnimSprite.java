@@ -10,7 +10,7 @@ public class AnimSprite extends Sprite {
     private final float framesPerSecond;
     private Rect srcRect = new Rect();
 //    private float time;
-    private long createdOn;
+    protected long createdOn;
 
     public AnimSprite(float x, float y, float w, float h, int bitmapResId, float framesPerSecond, int frameCount) {
         super(x, y, w, h, bitmapResId);
@@ -29,7 +29,6 @@ public class AnimSprite extends Sprite {
 
         createdOn = System.currentTimeMillis();
     }
-
     @Override
     public void draw(Canvas canvas) {
         long now = System.currentTimeMillis();

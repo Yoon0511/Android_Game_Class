@@ -45,7 +45,7 @@ public class MainGame {
 //    private ArrayList<GameObject> objects = new ArrayList<>();
     private ArrayList<ArrayList<GameObject>> layers;
     public enum Layer {
-        map, enemy, player,bullet ,ui, controller, COUNT
+        map, enemy, explosion,player,bullet ,ui, controller, COUNT
     }
     private Fighter fighter;
 

@@ -4,9 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
+import java.util.ArrayList;
+
 import kr.ac.my_towerdefence.R;
 import kr.ac.my_towerdefence.framework.BitmapPool;
 import kr.ac.my_towerdefence.framework.BoxCollidable;
+import kr.ac.my_towerdefence.framework.GameObject;
 import kr.ac.my_towerdefence.framework.Metrics;
 import kr.ac.my_towerdefence.framework.Recyclable;
 import kr.ac.my_towerdefence.framework.RecycleBin;
@@ -94,7 +97,26 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
             enemy.slow();
         }
         else if(bitmap == BitmapPool.get(R.mipmap.explosionbullet)){
+            explode();
+        }
+    }
 
+    private void explode() {
+        Explosion ex = Explosion.get(getX(), getY(), Map.tileWidth);
+        MainGame.getInstance().add(MainGame.Layer.explosion, ex);
+        ArrayList<GameObject> enemys = MainGame.getInstance().objectsAt(MainGame.Layer.enemy);
+        double explosion_radius = Map.tileWidth * 1.5;
+        for (GameObject e: enemys) {
+            Enemy enemy = (Enemy) e;
+            float dx = x - enemy.getX();
+            float dy = y - enemy.getY();
+            double dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < explosion_radius) {
+                boolean dead = enemy.decreaseLife(power);
+                if (dead) {
+                    MainGame.getInstance().remove(enemy);
+                }
+            }
         }
     }
 }
