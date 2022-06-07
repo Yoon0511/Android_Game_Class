@@ -140,13 +140,6 @@ public class MainGame {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-//        if (event.getAction() != MotionEvent.ACTION_DOWN) {
-//            return false;
-//        }
-//        int x = (int) (event.getX() / map.getTileWidth());
-//        int y = (int) (event.getY() / map.getTileHeight());
-//        Log.d(TAG, "onTouchEvent: " + x + " - " + y);
-
         ArrayList<GameObject> gameObjects = layers.get(Layer.controller.ordinal());
         for (GameObject gobj : gameObjects) {
             if (!(gobj instanceof Touchable)) {

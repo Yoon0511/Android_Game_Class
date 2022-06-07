@@ -25,16 +25,18 @@ public class Tower extends Sprite {
     private float tx,ty;
     private float angle;
     private String TAG = Tower.class.getSimpleName();
-    private Paint iceTowerPaint = new Paint();
 
     public Tower(float x, float y, Bitmap createBitmap) {
         super(x, y, R.dimen.tower_radious, R.mipmap.tower00);
         this.level = 1;
         this.range = 3 * Map.tileWidth * level;
-        this.power = 5;
+        this.power = 2;
+        if(bitmap != BitmapPool.get(R.mipmap.tower00))
+        {
+            this.power = 1;
+        }
         bitmap = createBitmap;
         fireInterval = Metrics.floatValue(R.dimen.tower_fire_interval);
-        iceTowerPaint.setColor(Color.BLUE);
     }
 
     public void update() {
@@ -67,8 +69,19 @@ public class Tower extends Sprite {
         angle = (float) Math.atan2(ty - this.y,tx - this.x);
     }
     private void fire() {
-        Bullet bullet = Bullet.get(x, y, power,tx,ty);
-        MainGame.getInstance().add(MainGame.Layer.bullet, bullet);
+        if(bitmap == BitmapPool.get(R.mipmap.tower00)) //기본 타워
+        {
+            Bullet bullet = Bullet.get(x, y, power,tx,ty,R.mipmap.bullet);
+            MainGame.getInstance().add(MainGame.Layer.bullet, bullet);
+        }
+       else if(bitmap == BitmapPool.get(R.mipmap.icetower)){ //슬로우 공격 타워
+            Bullet bullet = Bullet.get(x, y, power,tx,ty,R.mipmap.icebullet);
+            MainGame.getInstance().add(MainGame.Layer.bullet, bullet);
+        }
+        else if(bitmap == BitmapPool.get(R.mipmap.explosiontower)){ //광역공격타워
+            Bullet bullet = Bullet.get(x, y, power,tx,ty,R.mipmap.explosionbullet);
+            MainGame.getInstance().add(MainGame.Layer.bullet, bullet);
+        }
     }
 
     public void draw(Canvas canvas) {
@@ -76,5 +89,11 @@ public class Tower extends Sprite {
         canvas.rotate((float) (angle * 180 / Math.PI),x,y);
         canvas.drawBitmap(bitmap,null,dstRect,null);
         canvas.restore();
+    }
+
+    public void upgrade(){
+        this.level += 1;
+        this.power *= 1.2;
+        this.fireInterval *= 0.9;
     }
 }

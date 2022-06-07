@@ -1,9 +1,11 @@
 package kr.ac.my_towerdefence.game;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 
 import kr.ac.my_towerdefence.R;
+import kr.ac.my_towerdefence.framework.BitmapPool;
 import kr.ac.my_towerdefence.framework.BoxCollidable;
 import kr.ac.my_towerdefence.framework.Metrics;
 import kr.ac.my_towerdefence.framework.Recyclable;
@@ -22,28 +24,28 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
     private float angle;
     private static final float inset = (Metrics.width / 10f) / 3;
 
-    public Bullet(float x, float y,float power,float tx,float ty) {
+    public Bullet(float x, float y,float power,float tx,float ty,int bitmapId) {
         super(x, y, R.dimen.bullet_radious, R.mipmap.bullet);
         this.power = power;
         setTargetAngle(tx,ty);
+        bitmap = BitmapPool.get(bitmapId);
     }
 
-    //    private static ArrayList<Bullet> recycleBin = new ArrayList<>();
-    public static Bullet get(float x, float y, float power,float tx,float ty) {
+    public static Bullet get(float x, float y, float power,float tx,float ty,int bitmapId) {
         Bullet bullet = (Bullet) RecycleBin.get(Bullet.class);
         if (bullet != null) {
-//            Bullet bullet = recycleBin.remove(0);
-            bullet.set(x, y, power,tx,ty);
+            bullet.set(x, y, power,tx,ty,bitmapId);
             return bullet;
         }
-        return new Bullet(x, y, power,tx,ty);
+        return new Bullet(x, y, power,tx,ty,bitmapId);
     }
 
-    private void set(float x, float y, float power,float tx,float ty) {
+    private void set(float x, float y, float power,float tx,float ty,int bitmapId) {
         this.x = x;
         this.y = y;
         this.power = power;
         setTargetAngle(tx,ty);
+        bitmap = BitmapPool.get(bitmapId);
 
     }
 
@@ -84,5 +86,15 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
 
     public float getPower() {
         return power;
+    }
+
+    public void abilityActivation(Enemy enemy)
+    {
+        if(bitmap == BitmapPool.get(R.mipmap.icebullet)){
+            enemy.slow();
+        }
+        else if(bitmap == BitmapPool.get(R.mipmap.explosionbullet)){
+
+        }
     }
 }

@@ -3,6 +3,7 @@ package kr.ac.my_towerdefence.game;
 import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 
+import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -106,12 +107,6 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
             return;
         }
 
-//        dx += (2 * radius * random.nextFloat() - radius) * frameTime;
-//        if (dx < -radius) dx = -radius;
-//        else if (dx > radius) dx = radius;
-//        dy += (2 * radius * random.nextFloat() - radius) * frameTime;
-//        if (dy < -radius) dy = -radius;
-//        else if (dy > radius) dy = radius;
         dx = speed * frameTime;
         dy = speed * frameTime;
         pathMeasure.getPosTan(dist, pos, tan);
@@ -153,5 +148,18 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
         if (life <= 0) return true;
         gauge.setValue(life / maxLife);
         return false;
+    }
+    public void slow()
+    {
+        ValueAnimator animator = ValueAnimator
+                .ofFloat(speed * 0.5f, speed)
+                .setDuration(3000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                speed = (float) valueAnimator.getAnimatedValue();
+            }
+        });
+        animator.start();
     }
 }
