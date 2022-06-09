@@ -25,6 +25,7 @@ public class Ui extends Sprite implements Touchable {
     private Button[] towerBtns;
     private Sprite moveTowerImg;
     private int[][] map;
+    private int levelText;
 
     public Ui() {
         this.x = tileWidth * 16;
@@ -74,9 +75,6 @@ public class Ui extends Sprite implements Touchable {
             public boolean onTouch(Button.Action action,MotionEvent e,Bitmap bitmap) {
                 if(action == Button.Action.pressed)
                 {
-                    if(bitmap == BitmapPool.get(R.mipmap.tower00)){
-                        Log.d(TAG,"click");
-                    }
                     setMoveTowerImg(e.getX(),e.getY(),bitmap);
                     return true;
                 }
@@ -95,9 +93,6 @@ public class Ui extends Sprite implements Touchable {
                     return true;
                 }
                 else if(action == Button.Action.move) {
-                        if (bitmap == BitmapPool.get(R.mipmap.tower00)) {
-                            Log.d(TAG, "move");
-                        }
                         setMoveTowerImg(e.getX(), e.getY(), bitmap);
                         return true;
                     }
@@ -105,5 +100,9 @@ public class Ui extends Sprite implements Touchable {
             }
         }
         ));
+    }
+    private void towerOpthionBtnInit(float x,float y,int bitmap)
+    {
+
     }
 }

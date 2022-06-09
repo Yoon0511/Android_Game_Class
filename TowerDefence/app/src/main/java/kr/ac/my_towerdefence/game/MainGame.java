@@ -27,6 +27,8 @@ public class MainGame {
     private Tile tile;
     private Ui ui;
     public Tower[][] TOWER = new Tower[15][10];
+    private Selector selector;
+
     public static MainGame getInstance() {
         if (singleton == null) {
             singleton = new MainGame();
@@ -64,18 +66,18 @@ public class MainGame {
         map = new Map();
         map.init();
         add(Layer.map,map);
-        //float fighterY = Metrics.height - Metrics.size(R.dimen.fighter_y_offset);
-        //fighter = new Fighter(Metrics.width / 2, fighterY);
+
         float tileWidth = map.getTileWidth();
         float tileHeight = map.getTileHeight();
         Tower tower = new Tower(tileWidth * 6 + tileWidth/2,tileHeight * 7 + tileHeight/2, BitmapPool.get(R.mipmap.tower00));
         add(Layer.player, tower);
 
-
         ui = new Ui();
         add(Layer.ui,ui);
-        //score = new Score();
-        //add(Layer.ui, score);
+
+        selector = new Selector();
+        selector.select(-1,-1);
+        add(Layer.ui,selector);
 
         collisionPaint = new Paint();
         collisionPaint.setColor(Color.RED);
@@ -148,6 +150,11 @@ public class MainGame {
             boolean processed = ((Touchable) gobj).onTouchEvent(event);
             if (processed) return true;
         }
+        int x = (int) (event.getX() / map.getTileWidth());
+        int y = (int) (event.getY() / map.getTileHeight());
+
+        Tower tower = selector.select(x,y);
+
         return false;
     }
 
