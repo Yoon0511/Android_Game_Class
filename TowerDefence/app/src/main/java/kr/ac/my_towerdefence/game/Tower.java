@@ -100,4 +100,8 @@ public class Tower extends Sprite {
     public void remove(){
         MainGame.getInstance().remove(this);
     }
+
+    public int getlevel() {
+        return level;
+    }
 }

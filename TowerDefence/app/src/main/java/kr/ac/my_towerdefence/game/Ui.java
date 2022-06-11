@@ -2,6 +2,8 @@ package kr.ac.my_towerdefence.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.nfc.Tag;
@@ -27,6 +29,8 @@ public class Ui extends Sprite implements Touchable {
     private int[][] map;
     private int levelText;
     private Tower tower;
+    private Paint label = new Paint();
+    private float labelx,labely;
 
     public Ui() {
         this.x = tileWidth * 16;
@@ -37,9 +41,14 @@ public class Ui extends Sprite implements Touchable {
         this.radius = w / 2;
         dstRect.set(x - w / 2, y - h / 2, x + w / 2, y + h / 2);
         map = MainGame.getInstance().getmap();
+        this.labelx = this.x+ w * -0.1f;
+        this.labely = h;
+        label.setColor(Color.BLACK);
+        label.setTextSize(50);
 
         moveTowerImg = new Sprite(-100,-100,R.dimen.tower_radious,R.mipmap.tower00);
         MainGame.getInstance().add(MainGame.Layer.controller,moveTowerImg);
+
         towerBtnInit(h * 0.2f,R.mipmap.tower00);
         towerBtnInit(h * 0.4f,R.mipmap.icetower);
         towerBtnInit(h * 0.6f,R.mipmap.explosiontower);
@@ -63,6 +72,8 @@ public class Ui extends Sprite implements Touchable {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap,null,dstRect,null);
+        Log.d(TAG,""+labelx);
+        canvas.drawText("" + levelText,labelx,labely * 0.725f,label);
     }
 
     @Override
@@ -104,7 +115,15 @@ public class Ui extends Sprite implements Touchable {
         }
         ));
     }
-    public void setUiTower(Tower tower) {this.tower = tower;}
+    public void setUiTower(Tower tower) {
+        this.tower = tower;
+        if(tower != null){
+            levelText = tower.getlevel();
+        }
+        else{
+            levelText = 0;
+        }
+    }
 
     private void towerOpthionBtnInit(float x,float y,int bitmap)
     {

@@ -49,7 +49,6 @@ public class MainGame {
     public enum Layer {
         map, enemy, explosion,player,bullet ,ui, controller, COUNT
     }
-    private Fighter fighter;
 
     public static void clear() {
         singleton = null;
