@@ -96,4 +96,8 @@ public class Tower extends Sprite {
         this.power *= 1.2;
         this.fireInterval *= 0.9;
     }
+
+    public void remove(){
+        MainGame.getInstance().remove(this);
+    }
 }

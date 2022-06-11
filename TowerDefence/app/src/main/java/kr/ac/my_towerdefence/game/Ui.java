@@ -26,6 +26,7 @@ public class Ui extends Sprite implements Touchable {
     private Sprite moveTowerImg;
     private int[][] map;
     private int levelText;
+    private Tower tower;
 
     public Ui() {
         this.x = tileWidth * 16;
@@ -42,6 +43,8 @@ public class Ui extends Sprite implements Touchable {
         towerBtnInit(h * 0.2f,R.mipmap.tower00);
         towerBtnInit(h * 0.4f,R.mipmap.icetower);
         towerBtnInit(h * 0.6f,R.mipmap.explosiontower);
+        towerOpthionBtnInit(x + w * -0.2f,h * 0.8f,R.mipmap.uninstall);
+        towerOpthionBtnInit(x + w * 0.2f,h * 0.8f,R.mipmap.upgrade);
 
     }
     public void CreateTower(int mapx,int mapy,Bitmap bitmap)
@@ -101,8 +104,32 @@ public class Ui extends Sprite implements Touchable {
         }
         ));
     }
+    public void setUiTower(Tower tower) {this.tower = tower;}
+
     private void towerOpthionBtnInit(float x,float y,int bitmap)
     {
+        MainGame.getInstance().add(MainGame.Layer.controller,new Button(
+                x, y, tileWidth * 0.7f, tileHeight * 0.7f, bitmap, bitmap, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action, MotionEvent e, Bitmap bitmap) {
+                if(tower == null) return false;
 
+                if(action == Button.Action.pressed){
+                    if(bitmap == BitmapPool.get(R.mipmap.upgrade)) {
+                        Log.d(TAG,"update");
+                        tower.upgrade();
+                        return true;
+                    }
+                    else if(bitmap == BitmapPool.get(R.mipmap.uninstall)){
+                        Log.d(TAG,"uninstall");
+                        tower.remove();
+                        tower = null;
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+        ));
     }
 }

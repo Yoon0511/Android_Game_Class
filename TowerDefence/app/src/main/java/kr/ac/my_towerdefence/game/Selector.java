@@ -16,13 +16,13 @@ public class Selector extends Sprite {
         if(mapx < 15 && mapx >=0 && mapy < 10 && mapy >= 0)
         {
             this.tower = MainGame.getInstance().TOWER[mapx][mapy];
+            x = mapx * Map.tileWidth + Map.tileWidth/2;
+            y = mapy * Map.tileHeight + Map.tileHeight/2;
+            setDstRectWithRadius();
         }
         else
-            this.tower = null;
+            return null;
 
-        x = mapx * Map.tileWidth + Map.tileWidth/2;
-        y = mapy * Map.tileHeight + Map.tileHeight/2;
-        setDstRectWithRadius();
         return tower;
     }
 }

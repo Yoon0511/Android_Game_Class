@@ -154,7 +154,7 @@ public class MainGame {
         int y = (int) (event.getY() / map.getTileHeight());
 
         Tower tower = selector.select(x,y);
-
+        ui.setUiTower(selector.getTower());
         return false;
     }
 
