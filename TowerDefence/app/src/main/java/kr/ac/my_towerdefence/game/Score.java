@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import kr.ac.my_towerdefence.R;
 import kr.ac.my_towerdefence.framework.BitmapPool;
 import kr.ac.my_towerdefence.framework.GameObject;
 import kr.ac.my_towerdefence.framework.Metrics;
@@ -17,13 +16,18 @@ public class Score implements GameObject {
     private final float dstCharWidth, dstCharHeight;
     private Rect srcRect = new Rect();
     private RectF dstRect = new RectF();
-    private int score, displayScore;
+    private int score;
+    private int displayScore;
 
-    public Score() {
-        this.bitmap = BitmapPool.get(R.mipmap.enemy);
-        this.right = Metrics.width - Metrics.size(R.dimen.score_margin_right);
-        this.top = Metrics.size(R.dimen.score_margin_top);
-        this.dstCharWidth = Metrics.size(R.dimen.score_digit_width);
+//    public Score() {
+//        this.bitmap = BitmapPool.get(R.mipmap.number_24x32);
+//        this.right = Metrics.width - Metrics.size(R.dimen.score_margin_right);
+//        this.top = Metrics.size(R.dimen.score_margin_top);
+    public Score(int mipmapResId, float marginTop, float marginRight, float charWidth) {
+        this.bitmap = BitmapPool.get(mipmapResId);
+        this.right = Metrics.width - marginRight;
+        this.top = marginTop;
+        this.dstCharWidth = charWidth;
         this.srcCharWidth = bitmap.getWidth() / 10;
         this.srcCharHeight = bitmap.getHeight();
         this.dstCharHeight = dstCharWidth * srcCharHeight / srcCharWidth;
@@ -31,8 +35,11 @@ public class Score implements GameObject {
 
     public void set(int score) {
         this.score = score;
-        this.displayScore = score;
     }
+    public int get() {
+        return score;
+    }
+
     public void add(int score) {
         this.score += score;
     }
@@ -63,8 +70,5 @@ public class Score implements GameObject {
             value /= 10;
         }
     }
-
-    public int get() {
-        return score;
-    }
 }
+

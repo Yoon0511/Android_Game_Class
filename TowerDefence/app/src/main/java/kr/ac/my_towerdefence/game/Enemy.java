@@ -53,7 +53,7 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
     }
 
     private void set(int level,float x,float y, float speed) {
-        bitmap = BitmapPool.get(BITMAP_IDS[level - 1]);
+        bitmap = BitmapPool.get(R.mipmap.enemy00);
         dist = 0;
         this.x = x;
         this.y = y;
@@ -68,11 +68,11 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
 
     private Enemy(int level,float x,float y, float speed) {
 //        super(x, 0, R.dimen.enemy_radius, R.mipmap.f_01_01);
-        super(x, y, size, size, BITMAP_IDS[level - 1], 6, 0);
+        super(x, y, size, size, R.mipmap.enemy00, 6, 0);
         dist = 0;
         this.level = level;
         this.speed = speed;
-        life = maxLife = level * 10;
+        life = maxLife = level * 30;
         setDstRectWithRadius();
         boundingRect.set(dstRect);
         boundingRect.inset(inset, inset);
@@ -124,7 +124,10 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
     }
     @Override
     public void draw(Canvas canvas) {
+        canvas.save();
+        canvas.rotate(angle, x, y);
         super.draw(canvas);
+        canvas.restore();
 
         gauge.draw(canvas, x, y - size / 3);
     }
@@ -140,7 +143,7 @@ public class Enemy extends AnimSprite implements BoxCollidable, Recyclable {
     }
 
     public int getScore() {
-        return level * level * 100;
+        return level * 50;
     }
 
     public boolean decreaseLife(float power) {

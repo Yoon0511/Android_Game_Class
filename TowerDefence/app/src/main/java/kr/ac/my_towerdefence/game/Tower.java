@@ -20,8 +20,8 @@ public class Tower extends Sprite {
     protected static int[] BITMAP_IDS = {
             R.mipmap.tower00,R.mipmap.tower01
     };
-    private int level,power;
-    private float range = 5 * Map.tileWidth * level;
+    private int level,power,icePower,exlosionPower;
+    private float range;
     private float tx,ty;
     private float angle;
     private String TAG = Tower.class.getSimpleName();
@@ -30,13 +30,25 @@ public class Tower extends Sprite {
         super(x, y, R.dimen.tower_radious, R.mipmap.tower00);
         this.level = 1;
         this.range = 3 * Map.tileWidth * level;
-        this.power = 2;
+        this.power = 5;
+        this.icePower = 3;
+        this.exlosionPower = 2;
         if(bitmap != BitmapPool.get(R.mipmap.tower00))
         {
             this.power = 1;
         }
         bitmap = createBitmap;
-        fireInterval = Metrics.floatValue(R.dimen.tower_fire_interval);
+        if(bitmap == BitmapPool.get(R.mipmap.tower00)) //기본 타워
+        {
+            fireInterval = Metrics.floatValue(R.dimen.tower_fire_interval);
+        }
+        else if(bitmap == BitmapPool.get(R.mipmap.icetower)){ //슬로우 공격 타워
+            fireInterval = Metrics.floatValue(R.dimen.tower_ice_interval);
+        }
+        else if(bitmap == BitmapPool.get(R.mipmap.explosiontower)){ //광역공격타워
+            fireInterval = Metrics.floatValue(R.dimen.tower_explosion_interval);
+        }
+
     }
 
     public void update() {

@@ -22,7 +22,7 @@ import kr.ac.my_towerdefence.framework.Touchable;
 public class MainGame {
     private static final String TAG = MainGame.class.getSimpleName();
     private Paint collisionPaint;
-    private Score score;
+    public Score score;
     private Map map;
     private Tile tile;
     private Ui ui;
@@ -77,6 +77,12 @@ public class MainGame {
         selector = new Selector();
         selector.select(-1,-1);
         add(Layer.ui,selector);
+
+        score = new Score(R.mipmap.gold_number,
+                Map.tileWidth * 0.2f,Map.tileHeight * 3.0f,
+                Map.tileWidth * 0.6f);
+        score.set(500);
+        add(Layer.ui, score);
 
         collisionPaint = new Paint();
         collisionPaint.setColor(Color.RED);

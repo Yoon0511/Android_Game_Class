@@ -22,5 +22,7 @@
     <dimen name="bullet_initial_speed">150dp</dimen>
     <dimen name="bullet_radious">10dp</dimen>
     <item name="fighter_fire_interval" type="dimen" format="float">0.2</item>
-    <item name="tower_fire_interval" type="dimen" format="float">1.5</item>
+    <item name="tower_fire_interval" type="dimen" format="float">1.0</item>
+    <item name="tower_ice_interval" type="dimen" format="float">2.0</item>
+    <item name="tower_explosion_interval" type="dimen" format="float">2.5</item>
 </resources>

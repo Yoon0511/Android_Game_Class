@@ -112,7 +112,7 @@ public class Bullet extends Sprite implements BoxCollidable, Recyclable {
             float dy = y - enemy.getY();
             double dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < explosion_radius) {
-                boolean dead = enemy.decreaseLife(power);
+                boolean dead = enemy.decreaseLife(power * 0.5f);
                 if (dead) {
                     MainGame.getInstance().remove(enemy);
                 }

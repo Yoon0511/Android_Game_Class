@@ -72,7 +72,6 @@ public class Ui extends Sprite implements Touchable {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap,null,dstRect,null);
-        Log.d(TAG,""+labelx);
         canvas.drawText("" + levelText,labelx,labely * 0.725f,label);
     }
 
@@ -100,7 +99,11 @@ public class Ui extends Sprite implements Touchable {
                         if(MainGame.getInstance().TOWER[x][y] == null &&
                         map[y][x] == 0)
                         {
-                            CreateTower(x, y, bitmap);
+                            if(MainGame.getInstance().score.get() >= 100)
+                            {
+                                CreateTower(x, y, bitmap);
+                                MainGame.getInstance().score.add(-100);
+                            }
                         }
 
                     }
@@ -135,12 +138,15 @@ public class Ui extends Sprite implements Touchable {
 
                 if(action == Button.Action.pressed){
                     if(bitmap == BitmapPool.get(R.mipmap.upgrade)) {
-                        Log.d(TAG,"update");
-                        tower.upgrade();
+                        if(MainGame.getInstance().score.get() >= 300)
+                        {
+                            tower.upgrade();
+                            MainGame.getInstance().score.add(-300);
+                        }
+
                         return true;
                     }
                     else if(bitmap == BitmapPool.get(R.mipmap.uninstall)){
-                        Log.d(TAG,"uninstall");
                         tower.remove();
                         tower = null;
                         return true;
