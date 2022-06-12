@@ -5,8 +5,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import kr.ac.my_towerdefence.R;
 import kr.ac.my_towerdefence.framework.CollisionHelper;
 import kr.ac.my_towerdefence.framework.GameObject;
+import kr.ac.my_towerdefence.framework.Sound;
 
 public class CollisionChecker implements GameObject {
     private static final String TAG = CollisionChecker.class.getSimpleName();
@@ -34,6 +36,7 @@ public class CollisionChecker implements GameObject {
                     if (dead) {
                         game.remove(enemy);
                         MainGame.getInstance().score.add(enemy.getScore());
+                        Sound.playEffect(R.raw.jelly_coin);
                     }
                     break;
                 }

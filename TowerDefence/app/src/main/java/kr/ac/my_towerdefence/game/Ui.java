@@ -14,6 +14,7 @@ import kr.ac.my_towerdefence.R;
 import kr.ac.my_towerdefence.framework.BitmapPool;
 import kr.ac.my_towerdefence.framework.Button;
 import kr.ac.my_towerdefence.framework.Metrics;
+import kr.ac.my_towerdefence.framework.Sound;
 import kr.ac.my_towerdefence.framework.Sprite;
 import kr.ac.my_towerdefence.framework.Touchable;
 
@@ -61,6 +62,7 @@ public class Ui extends Sprite implements Touchable {
         Tower tower = new Tower(tileWidth * mapx + tileWidth/2,tileHeight * mapy + tileHeight/2,bitmap);
         MainGame.getInstance().add(MainGame.Layer.player, tower);
         MainGame.getInstance().TOWER[mapx][mapy] = tower;
+        Sound.playEffect(R.raw.jelly_item);
     }
 
     public void setMoveTowerImg(float x,float y,Bitmap bitmap)
