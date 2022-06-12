@@ -14,4 +14,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(new GameView(this, null));
 
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        finish();
+    }
 }
