@@ -140,7 +140,7 @@ public class MainGame {
                 gobj.draw(canvas);
                 if (gobj instanceof BoxCollidable) {
                     RectF rect = ((BoxCollidable) gobj).getBoundingRect();
-                    canvas.drawRect(rect, collisionPaint);
+                    //canvas.drawRect(rect, collisionPaint);
                 }
             }
         }
